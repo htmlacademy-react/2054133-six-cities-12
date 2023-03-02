@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Александр Алешкин](https://up.htmlacademy.ru/react/12/user/2054133).
-* Наставник: `Неизвестно`.
+* Наставник: [Глеб Клецков](https://up.htmlacademy.ru/profession/react/11/ecmascript/19/user/1487865).
 
 ---
 
