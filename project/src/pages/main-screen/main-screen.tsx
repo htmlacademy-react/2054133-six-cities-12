@@ -1,6 +1,7 @@
 import Logo from '../../components/logo/logo';
 import Card from '../../components/card/card';
 import Navigation from '../../components/navigation/navigation';
+import { Helmet } from 'react-helmet-async';
 
 type MainScreenProp = {
   countPlaces: number;
@@ -18,6 +19,10 @@ function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
           </div>
         </div>
       </header>
+
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>

@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 
@@ -12,6 +13,10 @@ function PropertyScreen(): JSX.Element {
           </div>
         </div>
       </header>
+
+      <Helmet>
+        <title>6 cities: property</title>
+      </Helmet>
 
       <main className="page__main page__main--property">
         <section className="property">

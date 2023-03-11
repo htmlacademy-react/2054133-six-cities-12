@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 
@@ -12,6 +13,10 @@ function FavoritesScreen() {
           </div>
         </div>
       </header>
+
+      <Helmet>
+        <title>6 cities: favorites</title>
+      </Helmet>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
