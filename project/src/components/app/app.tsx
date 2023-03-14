@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { OfferType } from '../../types/offer';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -9,9 +10,10 @@ import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProp = {
   countPlaces: number;
+  offersData: OfferType[];
 };
 
-function App({countPlaces}: AppScreenProp): JSX.Element {
+function App({countPlaces, offersData}: AppScreenProp): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -19,7 +21,7 @@ function App({countPlaces}: AppScreenProp): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesScreen />
+              <FavoritesScreen offersData={offersData}/>
             </PrivateRoute>
           }
         />
@@ -29,7 +31,12 @@ function App({countPlaces}: AppScreenProp): JSX.Element {
         />
         <Route
           path={AppRoute.Main}
-          element={<MainScreen countPlaces={countPlaces} />}
+          element={
+            <MainScreen
+              countPlaces={countPlaces}
+              offersData={offersData}
+            />
+          }
         />
         <Route
           path={AppRoute.Property}

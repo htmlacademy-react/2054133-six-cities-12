@@ -22,14 +22,14 @@ type GenreLocation = {
   zoom: number;
 };
 
-type Offers = {
+type OfferType = {
   bedrooms: number;
   city: GenreCity;
   description: string;
-  goods: [string];
+  goods: string[];
   host: GenreHost;
   id: number;
-  images: [string];
+  images: string[];
   isFavorite: boolean;
   isPremium: boolean;
   location: GenreLocation;
@@ -41,4 +41,4 @@ type Offers = {
   type: string;
 };
 
-export type { Offers };
+export type { OfferType };

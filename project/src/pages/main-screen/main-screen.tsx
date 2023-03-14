@@ -2,12 +2,14 @@ import Logo from '../../components/logo/logo';
 import Card from '../../components/card/card';
 import Navigation from '../../components/navigation/navigation';
 import { Helmet } from 'react-helmet-async';
+import { OfferType } from '../../types/offer';
 
 type MainScreenProp = {
   countPlaces: number;
+  offersData: OfferType[];
 };
 
-function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
+function MainScreen({countPlaces, offersData}: MainScreenProp): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -83,11 +85,7 @@ function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
+                {offersData.map((offer)=> <Card key={offer.id} offer={offer} />)}
               </div>
             </section>
             <div className="cities__right-section">
