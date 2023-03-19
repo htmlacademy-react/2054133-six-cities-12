@@ -5,7 +5,7 @@ type GenerUser = {
   name: string;
 };
 
-type User = {
+type UserCommentType = {
   comment: string;
   date: string;
   id: number;
@@ -13,4 +13,4 @@ type User = {
   user: GenerUser;
 };
 
-export type { User };
+export type { UserCommentType };

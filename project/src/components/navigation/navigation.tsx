@@ -1,7 +1,20 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { OfferType } from '../../types/offer';
 
-function Navigation(): JSX.Element {
+type NavgationProps = {
+  offersData: OfferType[];
+}
+
+function Navigation({offersData}: NavgationProps): JSX.Element {
+
+  const getFavoritesCount = offersData.reduce((acc, item) => {
+    if (item.isFavorite) {
+      acc += 1;
+    }
+    return acc;
+  },0);
+
   return (
     <ul className="header__nav-list">
       <li className="header__nav-item user">
@@ -9,7 +22,7 @@ function Navigation(): JSX.Element {
           <div className="header__avatar-wrapper user__avatar-wrapper">
           </div>
           <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-          <span className="header__favorite-count">3</span>
+          <span className="header__favorite-count">{getFavoritesCount}</span>
         </Link>
       </li>
       <li className="header__nav-item">

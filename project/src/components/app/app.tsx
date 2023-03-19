@@ -5,15 +5,17 @@ import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
-import PropertyScreen from '../../pages/property-screen/property-screen';
+import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
+import { UserCommentType } from '../../types/user';
 
 type AppScreenProp = {
   countPlaces: number;
   offersData: OfferType[];
+  reviewsData: UserCommentType[];
 };
 
-function App({countPlaces, offersData}: AppScreenProp): JSX.Element {
+function App({countPlaces, offersData, reviewsData}: AppScreenProp): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -39,8 +41,8 @@ function App({countPlaces, offersData}: AppScreenProp): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Property}
-          element={<PropertyScreen />}
+          path={`${AppRoute.Property}/:id`}
+          element={<RoomScreen offersData={offersData} reviewsData={reviewsData}/>}
         />
         <Route
           path='*'

@@ -1,5 +1,5 @@
 import { Helmet } from 'react-helmet-async';
-import FavoriteCard from '../../components/favorite-card/favorite-card';
+import FavoriteList from '../../components/favorite-list/favorite-list';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import { OfferType } from '../../types/offer';
@@ -16,7 +16,7 @@ function FavoritesScreen({offersData}: FavoriteScreenProp) {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation />
+            <Navigation offersData={offersData}/>
           </div>
         </div>
       </header>
@@ -29,9 +29,7 @@ function FavoritesScreen({offersData}: FavoriteScreenProp) {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {offersData.map((offer) => <FavoriteCard key={offer.id} offer={offer}/>)}
-            </ul>
+            <FavoriteList offersData={offersData}/>
           </section>
         </div>
       </main>
