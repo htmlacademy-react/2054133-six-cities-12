@@ -1,12 +1,15 @@
 import Logo from '../../components/logo/logo';
-import Card from '../../components/card/card';
 import Navigation from '../../components/navigation/navigation';
+import { Helmet } from 'react-helmet-async';
+import { OfferType } from '../../types/offer';
+import CardList from '../../components/card-list/card-list';
 
 type MainScreenProp = {
   countPlaces: number;
+  offersData: OfferType[];
 };
 
-function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
+function MainScreen({countPlaces, offersData}: MainScreenProp): JSX.Element {
 
   return (
     <div className="page page--gray page--main">
@@ -14,10 +17,14 @@ function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation />
+            <Navigation offersData={offersData}/>
           </div>
         </div>
       </header>
+
+      <Helmet>
+        <title>6 cities</title>
+      </Helmet>
 
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
@@ -77,13 +84,7 @@ function MainScreen({countPlaces}: MainScreenProp): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-                <Card/>
-              </div>
+              <CardList offersData={offersData}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

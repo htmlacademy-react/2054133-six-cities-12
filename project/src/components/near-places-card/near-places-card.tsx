@@ -4,23 +4,23 @@ import { OfferType } from '../../types/offer';
 import { getComponentIsBoolean, getRating } from '../../utils';
 import PremiumInfoCard from '../premium-info/premium-info-card';
 
-type CardProp = {
+type NearPlacesCardProps = {
   offerData: OfferType;
-};
+}
 
-function Card({offerData}: CardProp): JSX.Element {
+function NearPlacesCard({offerData}: NearPlacesCardProps): JSX.Element {
   const {price, previewImage, title, type, isPremium, isFavorite, rating, id} = offerData;
 
-  const preiumComponent = getComponentIsBoolean(isPremium, PremiumInfoCard());
   const getFavoriteClassName = () => isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button';
+  const preiumComponent = getComponentIsBoolean(isPremium, PremiumInfoCard());
   const offerRating = getRating(rating);
 
   return (
-    <article className="cities__card place-card">
+    <article className="near-places__card place-card">
       {preiumComponent}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Property}/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place photo"/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place image"/>
         </Link>
       </div>
       <div className="place-card__info">
@@ -33,7 +33,7 @@ function Card({offerData}: CardProp): JSX.Element {
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -51,4 +51,4 @@ function Card({offerData}: CardProp): JSX.Element {
   );
 }
 
-export default Card;
+export default NearPlacesCard;
