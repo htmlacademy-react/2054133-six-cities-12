@@ -1,14 +1,14 @@
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import { Helmet } from 'react-helmet-async';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import CardList from '../../components/card-list/card-list';
 import CitiesList from '../../components/cities-list/cities-list';
 import Map from '../../components/map/map';
 
 type MainScreenProp = {
   countPlaces: number;
-  offersData: OfferType[];
+  offersData: Offer[];
 };
 
 function MainScreen({countPlaces, offersData}: MainScreenProp): JSX.Element {

@@ -1,10 +1,10 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import leaflet, { Map } from 'leaflet';
-import { OfferType } from '../types/offer';
+import { Offer } from '../types/offer';
 
 type useMapProp = {
   mapRef: MutableRefObject<null>;
-  offersData: OfferType[];
+  offersData: Offer[];
 }
 
 function useMap({mapRef, offersData}: useMapProp) {

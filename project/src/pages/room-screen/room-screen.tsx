@@ -7,13 +7,13 @@ import NearPlacesCard from '../../components/near-places-card/near-places-card';
 import PremiumInfo from '../../components/premium-info/premium-info';
 import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { UserComment } from '../../types/user';
 import { getRating } from '../../utils';
 
 
 type RoomScreenProps = {
-  offersData: OfferType[];
+  offersData: Offer[];
   reviewsData: UserComment[];
 }
 

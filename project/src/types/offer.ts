@@ -22,7 +22,7 @@ type Location = {
   zoom: number;
 };
 
-type OfferType = {
+type Offer = {
   bedrooms: number;
   city: GenreCity;
   description: string;
@@ -41,4 +41,4 @@ type OfferType = {
   type: string;
 };
 
-export type { OfferType };
+export type { Offer };

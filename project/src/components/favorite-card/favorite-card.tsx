@@ -1,10 +1,10 @@
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 import PremiumInfo from '../premium-info/premium-info';
 
 type FavoriteCardProp = {
   city: string;
-  offersData: OfferType[];
+  offersData: Offer[];
 };
 
 function FavoriteCard({city, offersData}: FavoriteCardProp) {

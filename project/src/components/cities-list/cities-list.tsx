@@ -1,8 +1,8 @@
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import City from '../city/city';
 
 type CitiesListProp = {
-  offersData: OfferType[];
+  offersData: Offer[];
 }
 
 function CitiesList({offersData}: CitiesListProp): JSX.Element {

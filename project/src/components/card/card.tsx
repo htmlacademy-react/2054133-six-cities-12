@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 import PremiumInfo from '../premium-info/premium-info';
 
 type CardProp = {
-  offerData: OfferType;
+  offerData: Offer;
 };
 
 function Card({offerData}: CardProp): JSX.Element {
