@@ -1,6 +1,6 @@
 import { OfferType } from '../../types/offer';
-import { getComponentIsBoolean, getRating } from '../../utils';
-import Premium from '../premium-info/premium-info-card';
+import { getRating } from '../../utils';
+import PremiumInfo from '../premium-info/premium-info';
 
 type FavoriteCardProp = {
   city: string;
@@ -22,13 +22,12 @@ function FavoriteCard({city, offersData}: FavoriteCardProp) {
       <div className="favorites__places">
         {offersData.map((offer) => {
 
-          const preiumComponent = getComponentIsBoolean(offer.isPremium, Premium());
           const offerRating = getRating(offer.rating);
 
           if (offer.city.name === city) {
             return (
               <article className="favorites__card place-card" key="">
-                {preiumComponent}
+                {offer.isPremium && <PremiumInfo className="place-card__mark"/>}
                 <div className="favorites__image-wrapper place-card__image-wrapper">
                   <a href="/">
                     <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place image"/>

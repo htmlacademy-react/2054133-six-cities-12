@@ -7,12 +7,12 @@ import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
-import { UserCommentType } from '../../types/user';
+import { UserComment } from '../../types/user';
 
 type AppScreenProp = {
   countPlaces: number;
   offersData: OfferType[];
-  reviewsData: UserCommentType[];
+  reviewsData: UserComment[];
 };
 
 function App({countPlaces, offersData, reviewsData}: AppScreenProp): JSX.Element {
