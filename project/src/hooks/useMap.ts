@@ -2,12 +2,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import leaflet, { Map } from 'leaflet';
 import { Offer } from '../types/offer';
 
-type useMapProp = {
-  mapRef: MutableRefObject<null>;
-  offersData: Offer[];
-}
-
-function useMap({mapRef, offersData}: useMapProp) {
+function useMap(mapRef: MutableRefObject<null>, offersData: Offer[]) {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef(false);
 

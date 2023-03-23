@@ -3,13 +3,15 @@ import Card from '../card/card';
 
 type CardListProps = {
   offersData: Offer[];
+  className: string;
+  cardClassName: string;
 }
 
-function CardList({offersData}: CardListProps) {
+function CardList({offersData, className, cardClassName}: CardListProps) {
 
   return (
-    <div className="cities__places-list places__list tabs__content">
-      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} />)}
+    <div className={className}>
+      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName}/>)}
     </div>
   );
 }

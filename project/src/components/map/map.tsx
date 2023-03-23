@@ -6,16 +6,18 @@ import { Offer } from '../../types/offer';
 
 type MapProp = {
   offersData: Offer[];
+  className: string;
+  height: string;
 }
 
-function Map({offersData}: MapProp): JSX.Element {
+function Map({offersData, className, height}: MapProp): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap({mapRef, offersData});
+  const map = useMap(mapRef, offersData);
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg', // '../../../public/img/pin-active.svg' не получается добавить иконку или './public/img/pin-active.svg'
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: 'img/pin-active.svg',
+    iconSize: [28, 40],
+    iconAnchor: [14, 40],
   });
 
   useEffect(() => {
@@ -31,11 +33,11 @@ function Map({offersData}: MapProp): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offersData]);
+  }, [map, offersData, defaultCustomIcon]);
 
 
   return (
-    <section className="cities__map map" style={{height: 'auto'}} ref={mapRef}></section>
+    <section className={className} style={{height: height}} ref={mapRef}></section>
   );
 }
 
