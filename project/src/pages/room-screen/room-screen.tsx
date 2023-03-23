@@ -1,9 +1,10 @@
 import { useState, ChangeEvent } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
+import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
+import Map from '../../components/map/map';
 import Navigation from '../../components/navigation/navigation';
-import NearPlacesCard from '../../components/near-places-card/near-places-card';
 import PremiumInfo from '../../components/premium-info/premium-info';
 import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
@@ -30,6 +31,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
   const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentOffer;
 
   const otherOffersData = offersData.filter((offer) => offer.id !== currentOffer.id);
+  const slicedOtherOffersData = otherOffersData.slice(-3);
 
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
@@ -179,14 +181,12 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map offersData={otherOffersData} className={'property__map map'} height={'579px'}/>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              {otherOffersData.slice(-3).map((offer) => <NearPlacesCard key={offer.id} offerData={offer}/>)}
-            </div>
+            <CardList offersData={slicedOtherOffersData} className={'near-places__list places__list'} cardClassName={'near-places'}/>
           </section>
         </div>
       </main>
