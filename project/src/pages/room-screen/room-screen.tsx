@@ -4,17 +4,17 @@ import { Navigate, useParams } from 'react-router-dom';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import NearPlacesCard from '../../components/near-places-card/near-places-card';
-import PremiumInfoRoom from '../../components/premium-info/premium-info-room';
+import PremiumInfo from '../../components/premium-info/premium-info';
 import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
-import { OfferType } from '../../types/offer';
-import { UserCommentType } from '../../types/user';
-import { getComponentIsBoolean, getRating } from '../../utils';
+import { Offer } from '../../types/offer';
+import { UserComment } from '../../types/user';
+import { getRating } from '../../utils';
 
 
 type RoomScreenProps = {
-  offersData: OfferType[];
-  reviewsData: UserCommentType[];
+  offersData: Offer[];
+  reviewsData: UserComment[];
 }
 
 function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
@@ -34,8 +34,6 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
   const getBedroomsTitle = (bedroomsCount: number): string => bedroomsCount <= 1 ? `${bedroomsCount} bedroom` : `${bedroomsCount} bedrooms`;
-  const userStatus = getComponentIsBoolean(host.isPro, UserStatus());
-  const premiumComponent = getComponentIsBoolean(isPremium, PremiumInfoRoom());
 
   return (
     <div className="page">
@@ -61,7 +59,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {premiumComponent}
+              {isPremium && <PremiumInfo className="property__mark"/>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   {title}
@@ -110,7 +108,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
                   <span className="property__user-name">
                     {host.name}
                   </span>
-                  {userStatus}
+                  {host.isPro && UserStatus()}
                 </div>
                 <div className="property__description">
                   <p className="property__text">

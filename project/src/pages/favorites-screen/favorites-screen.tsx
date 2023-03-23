@@ -2,10 +2,10 @@ import { Helmet } from 'react-helmet-async';
 import FavoriteList from '../../components/favorite-list/favorite-list';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 
 type FavoriteScreenProp = {
-  offersData: OfferType[];
+  offersData: Offer[];
 };
 
 function FavoritesScreen({offersData}: FavoriteScreenProp) {

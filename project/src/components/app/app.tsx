@@ -1,18 +1,18 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
-import { UserCommentType } from '../../types/user';
+import { UserComment } from '../../types/user';
 
 type AppScreenProp = {
   countPlaces: number;
-  offersData: OfferType[];
-  reviewsData: UserCommentType[];
+  offersData: Offer[];
+  reviewsData: UserComment[];
 };
 
 function App({countPlaces, offersData, reviewsData}: AppScreenProp): JSX.Element {

@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 
 type NavgationProps = {
-  offersData: OfferType[];
+  offersData: Offer[];
 }
 
 function Navigation({offersData}: NavgationProps): JSX.Element {

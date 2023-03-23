@@ -1,8 +1,8 @@
-import { OfferType } from '../../types/offer';
+import { Offer } from '../../types/offer';
 import FavoriteCard from '../favorite-card/favorite-card';
 
 type FavoriteListProp = {
-  offersData: OfferType[];
+  offersData: Offer[];
 };
 
 function FavoriteList({offersData}: FavoriteListProp) {
@@ -11,7 +11,7 @@ function FavoriteList({offersData}: FavoriteListProp) {
 
   const getFavoriteCities = () => {
 
-    const cities:Record<string, OfferType[]> = {};
+    const cities:Record<string, Offer[]> = {};
 
     getFavoritesOffers.forEach((offer) => {
       if (offer.city.name in cities) {

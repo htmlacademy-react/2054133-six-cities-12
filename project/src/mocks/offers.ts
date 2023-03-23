@@ -1,6 +1,6 @@
-import { OfferType } from '../types/offer';
+import { Offer } from '../types/offer';
 
-const Offers: OfferType[] = [
+const Offers: Offer[] = [
   {
     'city': {
       'name': 'Dusseldorf',
@@ -53,8 +53,8 @@ const Offers: OfferType[] = [
     },
     'description': 'Relax, rejuvenate and unplug in this ultimate rustic getaway experience in the country. In our beautiful screened Pondhouse, you can gaze at the stars and listen to the sounds of nature from your cozy warm bed.',
     'location': {
-      'latitude': 51.205402,
-      'longitude': 6.7613140000000005,
+      'latitude': 51.205302,
+      'longitude': 6.7613140001000005,
       'zoom': 16
     },
     'id': 1

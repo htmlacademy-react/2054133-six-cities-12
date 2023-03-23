@@ -1,38 +1,38 @@
-type GenreCityLocation = {
+type CityLocation = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
 type GenreCity = {
-  location: GenreCityLocation;
+  location: CityLocation;
   name: string;
 };
 
-type GenreHost = {
+type Host = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
 };
 
-type GenreLocation = {
+type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 };
 
-type OfferType = {
+type Offer = {
   bedrooms: number;
   city: GenreCity;
   description: string;
   goods: string[];
-  host: GenreHost;
+  host: Host;
   id: number;
   images: string[];
   isFavorite: boolean;
   isPremium: boolean;
-  location: GenreLocation;
+  location: Location;
   maxAdults: number;
   previewImage: string;
   price: number;
@@ -41,4 +41,4 @@ type OfferType = {
   type: string;
 };
 
-export type { OfferType };
+export type { Offer };

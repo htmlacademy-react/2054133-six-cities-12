@@ -1,10 +1,10 @@
-import { UserCommentType } from '../../types/user';
+import { UserComment } from '../../types/user';
 import { getRating } from '../../utils';
 import dayjs from 'dayjs';
 
 
 type ReviewProps = {
-  review: UserCommentType;
+  review: UserComment;
 }
 
 function Review({review}: ReviewProps): JSX.Element {

@@ -1,8 +1,8 @@
-import { UserCommentType } from '../../types/user';
+import { UserComment } from '../../types/user';
 import Review from '../review/review.';
 
 type ReviewListProps = {
-  reviewsData: UserCommentType[];
+  reviewsData: UserComment[];
 }
 
 function ReviewList({reviewsData}: ReviewListProps): JSX.Element {

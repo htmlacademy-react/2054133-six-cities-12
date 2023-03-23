@@ -1,16 +1,16 @@
-type GenerUser = {
+type User = {
   avatarUrl: string;
   id: number;
   isPro: boolean;
   name: string;
 };
 
-type UserCommentType = {
+type UserComment = {
   comment: string;
   date: string;
   id: number;
   rating: number;
-  user: GenerUser;
+  user: User;
 };
 
-export type { UserCommentType };
+export type { UserComment };

@@ -1,23 +1,23 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { OfferType } from '../../types/offer';
-import { getComponentIsBoolean, getRating } from '../../utils';
-import PremiumInfoCard from '../premium-info/premium-info-card';
+import { Offer } from '../../types/offer';
+import { getRating } from '../../utils';
+import PremiumInfo from '../premium-info/premium-info';
 
 type CardProp = {
-  offerData: OfferType;
+  offerData: Offer;
 };
 
 function Card({offerData}: CardProp): JSX.Element {
   const {price, previewImage, title, type, isPremium, isFavorite, rating, id} = offerData;
 
-  const preiumComponent = getComponentIsBoolean(isPremium, PremiumInfoCard());
   const getFavoriteClassName = () => isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button';
   const offerRating = getRating(rating);
 
+
   return (
     <article className="cities__card place-card">
-      {preiumComponent}
+      {isPremium && <PremiumInfo className="place-card__mark"/>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`${AppRoute.Property}/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place photo"/>
