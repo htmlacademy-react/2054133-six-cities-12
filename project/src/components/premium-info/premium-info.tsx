@@ -1,8 +1,8 @@
-type PremiumInfoProp = {
+type PremiumInfoProps = {
   className: string;
 }
 
-function PremiumInfo({className}: PremiumInfoProp): JSX.Element {
+function PremiumInfo({className}: PremiumInfoProps): JSX.Element {
 
   return (
     <div className={className}>

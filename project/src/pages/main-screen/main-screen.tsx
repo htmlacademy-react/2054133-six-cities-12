@@ -6,12 +6,12 @@ import CardList from '../../components/card-list/card-list';
 import CitiesList from '../../components/cities-list/cities-list';
 import Map from '../../components/map/map';
 
-type MainScreenProp = {
+type MainScreenProps = {
   countPlaces: number;
   offersData: Offer[];
 };
 
-function MainScreen({countPlaces, offersData}: MainScreenProp): JSX.Element {
+function MainScreen({countPlaces, offersData}: MainScreenProps): JSX.Element {
 
   return (
     <div className="page page--gray page--main">

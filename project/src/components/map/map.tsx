@@ -4,13 +4,13 @@ import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { Offer } from '../../types/offer';
 
-type MapProp = {
+type MapProps = {
   offersData: Offer[];
   className: string;
   height: string;
 }
 
-function Map({offersData, className, height}: MapProp): JSX.Element {
+function Map({offersData, className, height}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, offersData);
 

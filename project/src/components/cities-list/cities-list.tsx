@@ -1,11 +1,11 @@
 import { Offer } from '../../types/offer';
 import City from '../city/city';
 
-type CitiesListProp = {
+type CitiesListProps = {
   offersData: Offer[];
 }
 
-function CitiesList({offersData}: CitiesListProp): JSX.Element {
+function CitiesList({offersData}: CitiesListProps): JSX.Element {
 
   const getCities = () => {
     const cities: string[] = [];

@@ -9,13 +9,13 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
 import { UserComment } from '../../types/user';
 
-type AppScreenProp = {
+type AppScreenProps = {
   countPlaces: number;
   offersData: Offer[];
   reviewsData: UserComment[];
 };
 
-function App({countPlaces, offersData, reviewsData}: AppScreenProp): JSX.Element {
+function App({countPlaces, offersData, reviewsData}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
