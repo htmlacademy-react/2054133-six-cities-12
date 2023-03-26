@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
-import { changeCityAction } from '../../store/action';
+import { changeCityAction, setOffersAction } from '../../store/action';
 
 type CityProps = {
   cityName: string;
@@ -15,8 +15,8 @@ function City({cityName, currentCity}: CityProps): JSX.Element {
 
   const handleCityChange = (newCity: string) => {
     dispatch(changeCityAction(newCity));
+    dispatch(setOffersAction(newCity));
   };
-
 
   return (
     <li className="locations__item">

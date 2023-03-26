@@ -2,18 +2,21 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../store';
 
 type MapProps = {
-  filteredOffers: Offer[];
   className: string;
   height: string;
 }
 
-function Map({filteredOffers, className, height}: MapProps): JSX.Element {
-  const getCityData = filteredOffers[0].city;
+function Map({className, height}: MapProps): JSX.Element {
+
+  const OffersList = useAppSelector((state) => state.offersList);
+
+  const currentCityData = OffersList[0].city;
+
   const mapRef = useRef(null);
-  const map = useMap(mapRef, getCityData);
+  const map = useMap(mapRef, currentCityData);
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
@@ -23,7 +26,7 @@ function Map({filteredOffers, className, height}: MapProps): JSX.Element {
 
   useEffect(() => {
     if (map) {
-      filteredOffers.forEach((offer) => {
+      OffersList.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -34,8 +37,7 @@ function Map({filteredOffers, className, height}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, filteredOffers, defaultCustomIcon]);
-
+  }, [map, OffersList, defaultCustomIcon]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>

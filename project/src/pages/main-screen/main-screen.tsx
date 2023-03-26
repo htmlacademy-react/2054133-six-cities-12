@@ -8,6 +8,7 @@ import { useAppSelector } from '../../store';
 import CitiesPlaces from '../../components/cities-places/cities-places';
 import NoCitiesPlaces from '../../components/no-cities-places/no-cities-places';
 
+
 type MainScreenProps = {
   offersData: Offer[];
 };
@@ -17,9 +18,7 @@ function MainScreen({offersData}: MainScreenProps): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
   const OffersList = useAppSelector((state) => state.offersList);
 
-  const filteredOffers = OffersList.filter((offer) => offer.city.name === currentCity);
-
-  const isFilteredOffers = filteredOffers.length >= 1;
+  const isFilteredOffers = OffersList.length >= 1;
 
   const getPageEmptyClassName = !isFilteredOffers ? ' page__main--index-empty' : '';
 
@@ -47,10 +46,10 @@ function MainScreen({offersData}: MainScreenProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            {isFilteredOffers && <CitiesPlaces filteredOffers={filteredOffers}/>}
+            {isFilteredOffers && <CitiesPlaces filteredOffers={OffersList}/>}
             {!isFilteredOffers && <NoCitiesPlaces />}
             <div className="cities__right-section">
-              {isFilteredOffers && <Map filteredOffers={filteredOffers} className={'cities__map map'} height={'auto'} />}
+              {isFilteredOffers && <Map className={'cities__map map'} height={'auto'} />}
             </div>
           </div>
         </div>

@@ -7,6 +7,6 @@ const Action = {
 
 const changeCityAction = createAction(Action.CHANGE_CITY, (city: string) => ({payload: city}));
 
-const setOffersAction = createAction(Action.FILL_OFFERS);
+const setOffersAction = createAction(Action.FILL_OFFERS, (city: string) => ({payload: city}));
 
 export { changeCityAction, setOffersAction, Action };

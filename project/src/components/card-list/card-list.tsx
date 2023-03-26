@@ -11,7 +11,7 @@ function CardList({offersData, className, cardClassName}: CardListProps) {
 
   return (
     <div className={className}>
-      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName}/>)}
+      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} />)}
     </div>
   );
 }

@@ -181,7 +181,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map filteredOffers={offersData} className={'property__map map'} height={'579px'}/>
+          <Map className={'property__map map'} height={'579px'}/>
         </section>
         <div className="container">
           <section className="near-places places">
