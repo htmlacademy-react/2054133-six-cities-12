@@ -5,24 +5,25 @@ import useMap from '../../hooks/useMap';
 import { Offer } from '../../types/offer';
 
 type MapProps = {
-  offersData: Offer[];
+  filteredOffers: Offer[];
   className: string;
   height: string;
 }
 
-function Map({offersData, className, height}: MapProps): JSX.Element {
+function Map({filteredOffers, className, height}: MapProps): JSX.Element {
+  const getCityData = filteredOffers[0].city;
   const mapRef = useRef(null);
-  const map = useMap(mapRef, offersData);
+  const map = useMap(mapRef, getCityData);
 
   const defaultCustomIcon = leaflet.icon({
-    iconUrl: 'img/pin-active.svg',
+    iconUrl: 'img/pin.svg',
     iconSize: [28, 40],
-    iconAnchor: [14, 40],
+    iconAnchor: [14, 0],
   });
 
   useEffect(() => {
     if (map) {
-      offersData.forEach((offer) => {
+      filteredOffers.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -33,7 +34,7 @@ function Map({offersData, className, height}: MapProps): JSX.Element {
           .addTo(map);
       });
     }
-  }, [map, offersData, defaultCustomIcon]);
+  }, [map, filteredOffers, defaultCustomIcon]);
 
 
   return (

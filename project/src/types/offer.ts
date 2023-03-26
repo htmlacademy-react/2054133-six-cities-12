@@ -4,7 +4,7 @@ type CityLocation = {
   zoom: number;
 };
 
-type GenreCity = {
+type City = {
   location: CityLocation;
   name: string;
 };
@@ -24,7 +24,7 @@ type Location = {
 
 type Offer = {
   bedrooms: number;
-  city: GenreCity;
+  city: City;
   description: string;
   goods: string[];
   host: Host;
@@ -41,4 +41,4 @@ type Offer = {
   type: string;
 };
 
-export type { Offer };
+export type { Offer, City };

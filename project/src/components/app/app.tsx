@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offer } from '../../types/offer';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
@@ -9,46 +10,47 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
 import { UserComment } from '../../types/user';
 
+
 type AppScreenProps = {
-  countPlaces: number;
   offersData: Offer[];
   reviewsData: UserComment[];
 };
 
-function App({countPlaces, offersData, reviewsData}: AppScreenProps): JSX.Element {
+function App({offersData, reviewsData}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path={AppRoute.Favorites}
-          element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
-              <FavoritesScreen offersData={offersData}/>
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={<LoginScreen />}
-        />
-        <Route
-          path={AppRoute.Main}
-          element={
-            <MainScreen
-              countPlaces={countPlaces}
-              offersData={offersData}
-            />
-          }
-        />
-        <Route
-          path={`${AppRoute.Property}/:id`}
-          element={<RoomScreen offersData={offersData} reviewsData={reviewsData}/>}
-        />
-        <Route
-          path='*'
-          element={<NotFoundScreen />}
-        />
-      </Routes>
+      <HelmetProvider>
+        <Routes>
+          <Route
+            path={AppRoute.Favorites}
+            element={
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesScreen offersData={offersData}/>
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path={AppRoute.Login}
+            element={<LoginScreen />}
+          />
+          <Route
+            path={AppRoute.Main}
+            element={
+              <MainScreen
+                offersData={offersData}
+              />
+            }
+          />
+          <Route
+            path={`${AppRoute.Property}/:id`}
+            element={<RoomScreen offersData={offersData} reviewsData={reviewsData}/>}
+          />
+          <Route
+            path='*'
+            element={<NotFoundScreen />}
+          />
+        </Routes>
+      </HelmetProvider>
     </BrowserRouter>
   );
 }
