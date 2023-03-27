@@ -1,14 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../store';
 
-type NavgationProps = {
-  offersData: Offer[];
-}
+function Navigation(): JSX.Element {
 
-function Navigation({offersData}: NavgationProps): JSX.Element {
+  const OffersList = useAppSelector((state) => state.offersList);
 
-  const getFavoritesCount = offersData.reduce((acc, item) => {
+  const getFavoritesCount = OffersList.reduce((acc, item) => {
     if (item.isFavorite) {
       acc += 1;
     }

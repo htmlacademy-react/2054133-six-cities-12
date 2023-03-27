@@ -36,9 +36,7 @@ function App({offersData, reviewsData}: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.Main}
             element={
-              <MainScreen
-                offersData={offersData}
-              />
+              <MainScreen/>
             }
           />
           <Route

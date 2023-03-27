@@ -43,7 +43,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation offersData={offersData}/>
+            <Navigation />
           </div>
         </div>
       </header>

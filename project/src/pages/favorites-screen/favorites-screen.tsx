@@ -16,7 +16,7 @@ function FavoritesScreen({offersData}: FavoriteScreenProps) {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation offersData={offersData}/>
+            <Navigation />
           </div>
         </div>
       </header>

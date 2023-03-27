@@ -1,19 +1,15 @@
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import { Helmet } from 'react-helmet-async';
-import { Offer } from '../../types/offer';
 import CitiesList from '../../components/cities-list/cities-list';
 import Map from '../../components/map/map';
 import { useAppSelector } from '../../store';
 import CitiesPlaces from '../../components/cities-places/cities-places';
 import NoCitiesPlaces from '../../components/no-cities-places/no-cities-places';
+import { useState } from 'react';
 
 
-type MainScreenProps = {
-  offersData: Offer[];
-};
-
-function MainScreen({offersData}: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
 
   const currentCity = useAppSelector((state) => state.currentCity);
   const OffersList = useAppSelector((state) => state.offersList);
@@ -22,13 +18,22 @@ function MainScreen({offersData}: MainScreenProps): JSX.Element {
 
   const getPageEmptyClassName = !isFilteredOffers ? ' page__main--index-empty' : '';
 
+  const [currentOfferId, setCurrentOfferId] = useState<number | string>();
+  const HandleCardOver = (offerId: number | string) => {
+
+    if (offerId > 0) {
+      return setCurrentOfferId(offerId);
+    }
+    setCurrentOfferId(-1);
+  };
+
   return (
     <div className={`page page--gray page--main${getPageEmptyClassName}`}>
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation offersData={offersData}/>
+            <Navigation />
           </div>
         </div>
       </header>
@@ -46,10 +51,10 @@ function MainScreen({offersData}: MainScreenProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            {isFilteredOffers && <CitiesPlaces filteredOffers={OffersList}/>}
+            {isFilteredOffers && <CitiesPlaces filteredOffers={OffersList} HandleCardOver={HandleCardOver} />}
             {!isFilteredOffers && <NoCitiesPlaces />}
             <div className="cities__right-section">
-              {isFilteredOffers && <Map className={'cities__map map'} height={'auto'} />}
+              {isFilteredOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
             </div>
           </div>
         </div>

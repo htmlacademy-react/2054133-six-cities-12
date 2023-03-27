@@ -1,4 +1,4 @@
-import leaflet from 'leaflet';
+import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
@@ -7,10 +7,10 @@ import { useAppSelector } from '../../store';
 type MapProps = {
   className: string;
   height: string;
+  currentOfferId?: number | string;
 }
 
-function Map({className, height}: MapProps): JSX.Element {
-
+function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
   const OffersList = useAppSelector((state) => state.offersList);
 
@@ -31,10 +31,15 @@ function Map({className, height}: MapProps): JSX.Element {
     iconAnchor: [14, 0],
   });
 
+  const markersGroup = useRef<LayerGroup>();
+
   useEffect(() => {
 
     if (map) {
-      map.flyTo([
+
+      markersGroup.current = new LayerGroup().addTo(map);
+
+      map.setView([
         currentCityData.location.latitude,
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
@@ -45,15 +50,21 @@ function Map({className, height}: MapProps): JSX.Element {
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id)
-              ? defaultCustomIcon
-              : currentCustomIcon,
+            icon: (offer.id === currentOfferId)
+              ? currentCustomIcon
+              : defaultCustomIcon,
           })
-          .addTo(map);
+          .addTo(markersGroup.current as LayerGroup);
       });
     }
 
-  }, [map, OffersList, defaultCustomIcon, currentCityData, currentCustomIcon]);
+    return () => {
+      if (markersGroup.current) {
+        markersGroup.current.remove();
+      }
+    };
+
+  }, [map, OffersList, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>
