@@ -36,10 +36,10 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
   useEffect(() => {
 
     if (map) {
-
+      markersGroup.current?.remove();
       markersGroup.current = new LayerGroup().addTo(map);
 
-      map.setView([
+      map.flyTo([
         currentCityData.location.latitude,
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
@@ -57,13 +57,6 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
           .addTo(markersGroup.current as LayerGroup);
       });
     }
-
-    return () => {
-      if (markersGroup.current) {
-        markersGroup.current.remove();
-      }
-    };
-
   }, [map, OffersList, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
 
   return (

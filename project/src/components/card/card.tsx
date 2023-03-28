@@ -7,17 +7,17 @@ import PremiumInfo from '../premium-info/premium-info';
 type CardProps = {
   offerData: Offer;
   cardClassName: string;
-  HandleCardOver?: (arg0: number | string) => void;
+  handleCardOver?: (id: number) => void;
 };
 
-function Card({offerData, cardClassName, HandleCardOver}: CardProps): JSX.Element {
+function Card({offerData, cardClassName, handleCardOver}: CardProps): JSX.Element {
   const {price, previewImage, title, type, isPremium, isFavorite, rating, id} = offerData;
 
   const getFavoriteClassName = () => isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button';
   const offerRating = getRating(rating);
 
   return (
-    <article className={`${cardClassName}__card place-card`} onMouseOver={() => HandleCardOver(id)} onMouseOut={() => HandleCardOver(-1)} >
+    <article className={`${cardClassName}__card place-card`} onMouseOver={() =>handleCardOver?.(id)} onMouseOut={() => handleCardOver?.(-1)} >
       {isPremium && <PremiumInfo className="place-card__mark"/>}
       <div className={`${cardClassName}__image-wrapper place-card__image-wrapper`}>
         <Link to={`${AppRoute.Property}/${id}`} >

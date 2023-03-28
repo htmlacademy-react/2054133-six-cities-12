@@ -5,14 +5,14 @@ type CardListProps = {
   offersData: Offer[];
   className: string;
   cardClassName: string;
-  HandleCardOver?: (arg0: number | string) => void;
+  handleCardOver?: (id: number) => void;
 }
 
-function CardList({offersData, className, cardClassName, HandleCardOver}: CardListProps) {
+function CardList({offersData, className, cardClassName, handleCardOver}: CardListProps) {
 
   return (
     <div className={className}>
-      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} HandleCardOver={HandleCardOver} />)}
+      {offersData.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)}
     </div>
   );
 }
