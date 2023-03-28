@@ -20,7 +20,6 @@ function MainScreen(): JSX.Element {
 
   const [currentOfferId, setCurrentOfferId] = useState<number | string>();
   const HandleCardOver = (offerId: number | string) => {
-
     if (offerId > 0) {
       return setCurrentOfferId(offerId);
     }
