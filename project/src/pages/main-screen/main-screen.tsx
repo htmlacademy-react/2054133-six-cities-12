@@ -14,9 +14,9 @@ function MainScreen(): JSX.Element {
   const currentCity = useAppSelector((state) => state.currentCity);
   const OffersList = useAppSelector((state) => state.offersList);
 
-  const isFilteredOffers = OffersList.length >= 1;
+  const isOffers = OffersList.length >= 1;
 
-  const getPageEmptyClassName = !isFilteredOffers ? ' page__main--index-empty' : '';
+  const getPageEmptyClassName = !isOffers ? ' page__main--index-empty' : '';
 
   const [currentOfferId, setCurrentOfferId] = useState<number | string>();
   const handleCardOver = (offerId: number | string) => {
@@ -50,10 +50,10 @@ function MainScreen(): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            {isFilteredOffers && <CitiesPlaces filteredOffers={OffersList} handleCardOver={handleCardOver} />}
-            {!isFilteredOffers && <NoCitiesPlaces />}
+            {isOffers && <CitiesPlaces handleCardOver={handleCardOver} />}
+            {!isOffers && <NoCitiesPlaces />}
             <div className="cities__right-section">
-              {isFilteredOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
+              {isOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
             </div>
           </div>
         </div>

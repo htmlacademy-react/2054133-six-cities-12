@@ -9,6 +9,7 @@ const initialState = {
   offersList: Offers.filter((offer) => offer.city.name === 'Paris'),
   favoriteOffersList: FavoriteOffers,
   reviewsList: ReviewsData,
+  nearbyOffersList : Offers,
 };
 
 const reducer = createReducer(initialState, (builder) => {

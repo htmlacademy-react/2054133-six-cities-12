@@ -26,9 +26,6 @@ function RoomScreen(): JSX.Element {
 
   const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentOffer;
 
-  const otherOffersData = offersList.filter((offer) => offer.id !== currentOffer.id);
-  const slicedOtherOffersData = otherOffersData.slice(-3);
-
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
   const getBedroomsTitle = (bedroomsCount: number): string => bedroomsCount <= 1 ? `${bedroomsCount} bedroom` : `${bedroomsCount} bedrooms`;
@@ -182,7 +179,7 @@ function RoomScreen(): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList offersData={slicedOtherOffersData} className={'near-places__list places__list'} cardClassName={'near-places'}/>
+            <CardList className={'near-places__list places__list'} cardClassName={'near-places'}/>
           </section>
         </div>
       </main>
