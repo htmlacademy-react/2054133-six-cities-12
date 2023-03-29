@@ -43,7 +43,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation offersData={offersData}/>
+            <Navigation />
           </div>
         </div>
       </header>
@@ -181,7 +181,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offersData={otherOffersData} className={'property__map map'} height={'579px'}/>
+          <Map className={'property__map map'} height={'579px'}/>
         </section>
         <div className="container">
           <section className="near-places places">

@@ -4,11 +4,11 @@ import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import { Offer } from '../../types/offer';
 
-type FavoriteScreenProp = {
+type FavoriteScreenProps = {
   offersData: Offer[];
 };
 
-function FavoritesScreen({offersData}: FavoriteScreenProp) {
+function FavoritesScreen({offersData}: FavoriteScreenProps) {
 
   return (
     <div className="page">
@@ -16,7 +16,7 @@ function FavoritesScreen({offersData}: FavoriteScreenProp) {
         <div className="container">
           <div className="header__wrapper">
             <Logo />
-            <Navigation offersData={offersData}/>
+            <Navigation />
           </div>
         </div>
       </header>

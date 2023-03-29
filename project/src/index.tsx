@@ -1,26 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { HelmetProvider } from 'react-helmet-async';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
 import { Offers } from './mocks/offers';
 import { ReviewsData } from './mocks/reviews';
+import { store } from './store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 
-const Setting = {
-  CountPlaces: 320
-} as const;
-
 root.render(
   <React.StrictMode>
-    <HelmetProvider>
+    <Provider store={store}>
       <App
-        countPlaces={Setting.CountPlaces}
         offersData={Offers}
         reviewsData={ReviewsData}
       />
-    </HelmetProvider>
+    </Provider>
   </React.StrictMode>,
 );

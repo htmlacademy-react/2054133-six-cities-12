@@ -2,12 +2,12 @@ import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 import PremiumInfo from '../premium-info/premium-info';
 
-type FavoriteCardProp = {
+type FavoriteCardProps = {
   city: string;
   offersData: Offer[];
 };
 
-function FavoriteCard({city, offersData}: FavoriteCardProp) {
+function FavoriteCard({city, offersData}: FavoriteCardProps) {
 
   return (
     <li className="favorites__locations-items">

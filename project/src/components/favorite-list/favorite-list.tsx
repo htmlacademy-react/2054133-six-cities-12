@@ -1,11 +1,11 @@
 import { Offer } from '../../types/offer';
 import FavoriteCard from '../favorite-card/favorite-card';
 
-type FavoriteListProp = {
+type FavoriteListProps = {
   offersData: Offer[];
 };
 
-function FavoriteList({offersData}: FavoriteListProp) {
+function FavoriteList({offersData}: FavoriteListProps) {
 
   const getFavoritesOffers = offersData.filter((offer) => offer.isFavorite === true);
 
