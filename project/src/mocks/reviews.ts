@@ -1,4 +1,6 @@
-const ReviewsData = [
+import { UserComment } from '../types/user';
+
+const ReviewsData: UserComment[] = [
   {
     'id': 1,
     'user': {

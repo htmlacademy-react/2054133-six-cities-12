@@ -2,13 +2,9 @@ import { Helmet } from 'react-helmet-async';
 import FavoriteList from '../../components/favorite-list/favorite-list';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
-import { Offer } from '../../types/offer';
 
-type FavoriteScreenProps = {
-  offersData: Offer[];
-};
 
-function FavoritesScreen({offersData}: FavoriteScreenProps) {
+function FavoritesScreen() {
 
   return (
     <div className="page">
@@ -29,7 +25,7 @@ function FavoritesScreen({offersData}: FavoriteScreenProps) {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            <FavoriteList offersData={offersData}/>
+            <FavoriteList />
           </section>
         </div>
       </main>

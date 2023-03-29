@@ -1,14 +1,13 @@
-import { UserComment } from '../../types/user';
+import { useAppSelector } from '../../store';
 import Review from '../review/review.';
 
-type ReviewListProps = {
-  reviewsData: UserComment[];
-}
+function ReviewList(): JSX.Element {
 
-function ReviewList({reviewsData}: ReviewListProps): JSX.Element {
+  const reviewList = useAppSelector((state) => state.reviewsList);
+
   return (
     <ul className="reviews__list">
-      {reviewsData.slice(-10).map((review) => <Review key={review.id} review={review}/>)}
+      {reviewList.slice(-10).map((review) => <Review key={review.id} review={review}/>)}
     </ul>
   );
 }

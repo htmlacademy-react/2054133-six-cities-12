@@ -1,19 +1,16 @@
 import { Offer } from '../../types/offer';
 import FavoriteCard from '../favorite-card/favorite-card';
+import { useAppSelector } from '../../store';
 
-type FavoriteListProps = {
-  offersData: Offer[];
-};
+function FavoriteList() {
 
-function FavoriteList({offersData}: FavoriteListProps) {
-
-  const getFavoritesOffers = offersData.filter((offer) => offer.isFavorite === true);
+  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
 
   const getFavoriteCities = () => {
 
     const cities:Record<string, Offer[]> = {};
 
-    getFavoritesOffers.forEach((offer) => {
+    favoritesList.forEach((offer) => {
       if (offer.city.name in cities) {
         return cities[offer.city.name].push(offer);
       }
@@ -23,11 +20,9 @@ function FavoriteList({offersData}: FavoriteListProps) {
     return cities;
   };
 
-  const favoriteCities = getFavoriteCities();
-
   return (
     <ul className="favorites__list">
-      {Object.keys(favoriteCities).map((city) => <FavoriteCard key="" city={city} offersData={getFavoritesOffers}/>)}
+      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCard key="" city={city} />)}
     </ul>
   );
 }

@@ -1,10 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit';
+import { FavoriteOffers } from '../mocks/favorite-offers';
 import { Offers } from '../mocks/offers';
+import { ReviewsData } from '../mocks/reviews';
 import { changeCityAction, setOffersAction } from './action';
 
 const initialState = {
   currentCity: 'Paris',
   offersList: Offers.filter((offer) => offer.city.name === 'Paris'),
+  favoriteOffersList: FavoriteOffers,
+  reviewsList: ReviewsData,
 };
 
 const reducer = createReducer(initialState, (builder) => {

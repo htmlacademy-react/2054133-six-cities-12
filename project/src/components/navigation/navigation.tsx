@@ -4,9 +4,9 @@ import { useAppSelector } from '../../store';
 
 function Navigation(): JSX.Element {
 
-  const OffersList = useAppSelector((state) => state.offersList);
+  const offersList = useAppSelector((state) => state.favoriteOffersList);
 
-  const getFavoritesCount = OffersList.reduce((acc, item) => {
+  const getFavoritesCount = offersList.reduce((acc, item) => {
     if (item.isFavorite) {
       acc += 1;
     }
