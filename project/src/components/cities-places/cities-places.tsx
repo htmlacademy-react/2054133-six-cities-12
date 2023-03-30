@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { OPTIONS } from '../../const';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { sortingOffersAction } from '../../store/action';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
 
 type CitiesPlacesProps = {
   handleCardOver?: (id: number) => void;
+  currentCity: string;
 }
 
-function CitiesPlaces({handleCardOver}: CitiesPlacesProps): JSX.Element {
+function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Element {
+  const dispatch = useAppDispatch();
 
   const OffersList = useAppSelector((state) => state.offersList);
 
@@ -17,8 +20,11 @@ function CitiesPlaces({handleCardOver}: CitiesPlacesProps): JSX.Element {
 
   const [optionClassName, setOptionClassName] = useState<string>('Popular');
   const handleClickOption = (evt: React.MouseEvent<HTMLLIElement>) => {
-    setOptionClassName(evt.target.textContent);
-    setOptionsListClassName('');
+    if (evt.target instanceof HTMLElement && !(evt.target.textContent === null)) {
+      setOptionClassName(evt.target.textContent);
+      setOptionsListClassName('');
+      dispatch(sortingOffersAction(evt.target.textContent, currentCity));
+    }
   };
 
   useEffect(() => {
@@ -39,7 +45,7 @@ function CitiesPlaces({handleCardOver}: CitiesPlacesProps): JSX.Element {
           </svg>
         </span>
         <ul className={`places__options places__options--custom ${optionsListClassName}`} >
-          {OPTIONS.map((option) => <OptionSort key="option" handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
+          {Object.values(OPTIONS).map((option) => <OptionSort key="option" handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
         </ul>
       </form>
       <CardList className={'cities__places-list places__list tabs__content' } cardClassName={'cities'} handleCardOver={handleCardOver} />

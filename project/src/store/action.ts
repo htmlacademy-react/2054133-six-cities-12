@@ -10,6 +10,6 @@ const changeCityAction = createAction(Action.CHANGE_CITY, (city: string) => ({pa
 
 const filteringOffersAction = createAction(Action.FILTER_OFFERS, (city: string) => ({payload: city}));
 
-const sortingOffersAction = createAction(Action.SORT_OFFERS, (city: string) => ({payload: []}));
+const sortingOffersAction = createAction(Action.SORT_OFFERS, (sortType: string, city: string) => ({payload: {sortType, city}}));
 
 export { Action, changeCityAction, filteringOffersAction, sortingOffersAction };

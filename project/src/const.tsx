@@ -13,6 +13,11 @@ enum AuthorizationStatus {
 
 const CITIES = ['Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'] as const;
 
-const OPTIONS = ['Popular', 'Price: low to high', 'Price: high to low', 'Top rated first'] as const;
+const OPTIONS = {
+  POPULAR: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  TOP_RATED: 'Top rated first'
+} as const;
 
 export { AppRoute, AuthorizationStatus, CITIES, OPTIONS };

@@ -5,6 +5,7 @@ type OptionSortProps = {
 }
 
 function OptionSort({handleClickOption, optionClassName, option}: OptionSortProps) {
+
   return(
     <li className={`places__option ${option === optionClassName ? 'places__option--active' : ''}`} tabIndex={0} onClick={(evt) => handleClickOption(evt)}>{option}</li>
   );

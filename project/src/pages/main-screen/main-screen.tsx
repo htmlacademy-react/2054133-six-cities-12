@@ -50,7 +50,7 @@ function MainScreen(): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            {isOffers && <CitiesPlaces handleCardOver={handleCardOver} />}
+            {isOffers && <CitiesPlaces handleCardOver={handleCardOver} currentCity={currentCity}/>}
             {!isOffers && <NoCitiesPlaces />}
             <div className="cities__right-section">
               {isOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
