@@ -20,7 +20,7 @@ function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Ele
 
   const [optionClassName, setOptionClassName] = useState<string>('Popular');
   const handleClickOption = (evt: React.MouseEvent<HTMLLIElement>) => {
-    if (evt.target instanceof HTMLElement && !(evt.target.textContent === null)) {
+    if (evt.target instanceof HTMLElement && evt.target.textContent !== null) {
       setOptionClassName(evt.target.textContent);
       setOptionsListClassName('');
       dispatch(sortingOffersAction(evt.target.textContent, currentCity));
