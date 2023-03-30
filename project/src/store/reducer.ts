@@ -3,7 +3,7 @@ import { OPTIONS } from '../const';
 import { FavoriteOffers } from '../mocks/favorite-offers';
 import { Offers } from '../mocks/offers';
 import { ReviewsData } from '../mocks/reviews';
-import { Offer } from '../types/offer';
+import { SortToHigh, SortToLow, SortTopRating } from '../utils';
 import { changeCityAction, filteringOffersAction, sortingOffersAction } from './action';
 
 const initialState = {
@@ -27,45 +27,15 @@ const reducer = createReducer(initialState, (builder) => {
         state.offersList = Offers.filter((offer) => offer.city.name === action.payload.city);
       }
       if (action.payload.sortType === OPTIONS.PRICE_TO_HIGH) {
-        state.offersList = state.offersList.sort(high);
+        state.offersList = state.offersList.sort(SortToHigh);
       }
       if (action.payload.sortType === OPTIONS.PRICE_TO_LOW) {
-        state.offersList = state.offersList.sort(low);
+        state.offersList = state.offersList.sort(SortToLow);
       }
       if (action.payload.sortType === OPTIONS.TOP_RATED) {
-        state.offersList = state.offersList.sort(rating);
+        state.offersList = state.offersList.sort(SortTopRating);
       }
     });
 });
-
-const high = (a: Offer, b: Offer) => {
-  if (a.price < b.price) {
-    return -1;
-  }
-  if (a.price > b.price) {
-    return 1;
-  }
-  return 0;
-};
-
-const low = (a: Offer, b: Offer) => {
-  if (a.price > b.price) {
-    return -1;
-  }
-  if (a.price < b.price) {
-    return 1;
-  }
-  return 0;
-};
-
-const rating = (a: Offer, b: Offer) => {
-  if (a.rating > b.rating) {
-    return -1;
-  }
-  if (a.rating < b.rating) {
-    return 1;
-  }
-  return 0;
-};
 
 export { reducer };
