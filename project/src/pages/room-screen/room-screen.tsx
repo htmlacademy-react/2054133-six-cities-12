@@ -8,30 +8,23 @@ import Navigation from '../../components/navigation/navigation';
 import PremiumInfo from '../../components/premium-info/premium-info';
 import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
-import { Offer } from '../../types/offer';
-import { UserComment } from '../../types/user';
+import { useAppSelector } from '../../store';
 import { getRating } from '../../utils';
 
-
-type RoomScreenProps = {
-  offersData: Offer[];
-  reviewsData: UserComment[];
-}
-
-function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
+function RoomScreen(): JSX.Element {
   const [UserReview, setUserReview] = useState({rating: '', review: ''});
 
+  const offersList = useAppSelector((state) => state.offersList);
+  const reviewList = useAppSelector((state) => state.reviewsList);
+
   const params = useParams();
-  const currentOffer = offersData.find((offer) => offer.id === Number(params.id));
+  const currentOffer = offersList.find((offer) => offer.id === Number(params.id));
 
   if (!currentOffer) {
     return <Navigate to={'/'}/>;
   }
 
   const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentOffer;
-
-  const otherOffersData = offersData.filter((offer) => offer.id !== currentOffer.id);
-  const slicedOtherOffersData = otherOffersData.slice(-3);
 
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
@@ -119,8 +112,8 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewsData.length}</span></h2>
-                <ReviewList reviewsData={reviewsData}/>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
+                <ReviewList />
                 <form className="reviews__form form" action="#" method="post">
                   <label className="reviews__label form__label" htmlFor="review">Your review</label>
                   <div
@@ -186,7 +179,7 @@ function RoomScreen({offersData, reviewsData}: RoomScreenProps): JSX.Element {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <CardList offersData={slicedOtherOffersData} className={'near-places__list places__list'} cardClassName={'near-places'}/>
+            <CardList className={'near-places__list places__list'} cardClassName={'near-places'}/>
           </section>
         </div>
       </main>

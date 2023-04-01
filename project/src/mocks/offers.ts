@@ -30,7 +30,7 @@ const Offers: Offer[] = [
     'title': 'Wood and stone place',
     'isFavorite': false,
     'isPremium': false,
-    'rating': 4.4,
+    'rating': 3.4,
     'type': 'room',
     'bedrooms': 1,
     'maxAdults': 2,
@@ -88,7 +88,7 @@ const Offers: Offer[] = [
     'title': 'The house among olive ',
     'isFavorite': true,
     'isPremium': true,
-    'rating': 3.9,
+    'rating': 4.9,
     'type': 'house',
     'bedrooms': 2,
     'maxAdults': 2,
@@ -142,7 +142,7 @@ const Offers: Offer[] = [
     'title': 'Waterfront with extraordinary view',
     'isFavorite': true,
     'isPremium': false,
-    'rating': 3.9,
+    'rating': 2.9,
     'type': 'room',
     'bedrooms': 3,
     'maxAdults': 1,
@@ -254,7 +254,7 @@ const Offers: Offer[] = [
     'title': 'Nice, cozy, warm big bed apartment',
     'isFavorite': false,
     'isPremium': false,
-    'rating': 2.3,
+    'rating': 4.3,
     'type': 'hotel',
     'bedrooms': 3,
     'maxAdults': 7,
@@ -284,6 +284,58 @@ const Offers: Offer[] = [
       'zoom': 16
     },
     'id': 5
+  },
+  {
+    'city': {
+      'name': 'Paris',
+      'location': {
+        'latitude': 48.85661,
+        'longitude': 2.351499,
+        'zoom': 13
+      }
+    },
+    'previewImage': 'https://12.react.pages.academy/static/hotel/20.jpg',
+    'images': [
+      'https://12.react.pages.academy/static/hotel/12.jpg',
+      'https://12.react.pages.academy/static/hotel/2.jpg',
+      'https://12.react.pages.academy/static/hotel/6.jpg',
+      'https://12.react.pages.academy/static/hotel/13.jpg',
+      'https://12.react.pages.academy/static/hotel/15.jpg',
+      'https://12.react.pages.academy/static/hotel/20.jpg',
+      'https://12.react.pages.academy/static/hotel/9.jpg',
+      'https://12.react.pages.academy/static/hotel/4.jpg',
+      'https://12.react.pages.academy/static/hotel/1.jpg',
+      'https://12.react.pages.academy/static/hotel/16.jpg',
+      'https://12.react.pages.academy/static/hotel/7.jpg',
+      'https://12.react.pages.academy/static/hotel/19.jpg',
+      'https://12.react.pages.academy/static/hotel/18.jpg',
+      'https://12.react.pages.academy/static/hotel/17.jpg'
+    ],
+    'title': 'Perfectly located Castro',
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 2.2,
+    'type': 'room',
+    'bedrooms': 1,
+    'maxAdults': 2,
+    'price': 270,
+    'goods': [
+      'Breakfast',
+      'Laptop friendly workspace'
+    ],
+    'host': {
+      'id': 25,
+      'name': 'Angelina',
+      'isPro': true,
+      'avatarUrl': 'img/avatar-angelina.jpg'
+    },
+    'description': 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
+    'location': {
+      'latitude': 48.84761,
+      'longitude': 2.356499,
+      'zoom': 16
+    },
+    'id': 56
   }
 ];
 

@@ -1,13 +1,14 @@
-import { Offer } from '../../types/offer';
+import { useAppSelector } from '../../store';
 import { getRating } from '../../utils';
 import PremiumInfo from '../premium-info/premium-info';
 
 type FavoriteCardProps = {
   city: string;
-  offersData: Offer[];
 };
 
-function FavoriteCard({city, offersData}: FavoriteCardProps) {
+function FavoriteCard({city}: FavoriteCardProps) {
+
+  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
 
   return (
     <li className="favorites__locations-items">
@@ -20,7 +21,7 @@ function FavoriteCard({city, offersData}: FavoriteCardProps) {
       </div>
 
       <div className="favorites__places">
-        {offersData.map((offer) => {
+        {favoritesList.map((offer) => {
 
           const offerRating = getRating(offer.rating);
 

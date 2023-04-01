@@ -2,11 +2,14 @@ import { createAction } from '@reduxjs/toolkit';
 
 const Action = {
   CHANGE_CITY: 'CHANGE_CITY',
-  FILL_OFFERS: 'FILL_OFFERS',
+  FILTER_OFFERS: 'FILTER_OFFERS',
+  SORT_OFFERS: 'SORT_OFFERS',
 } as const;
 
 const changeCityAction = createAction(Action.CHANGE_CITY, (city: string) => ({payload: city}));
 
-const setOffersAction = createAction(Action.FILL_OFFERS, (city: string) => ({payload: city}));
+const filteringOffersAction = createAction(Action.FILTER_OFFERS, (city: string) => ({payload: city}));
 
-export { changeCityAction, setOffersAction, Action };
+const sortingOffersAction = createAction(Action.SORT_OFFERS, (sortType: string, city: string) => ({payload: {sortType, city}}));
+
+export { Action, changeCityAction, filteringOffersAction, sortingOffersAction };
