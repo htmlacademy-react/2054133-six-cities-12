@@ -48,7 +48,7 @@ function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Ele
           </svg>
         </span>
         <ul className={`places__options places__options--custom ${optionsListClassName}`} >
-          {Object.values(OPTIONS).map((option) => <OptionSort key="option" handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
+          {Object.values(OPTIONS).map((option) => <OptionSort key={option} handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
         </ul>
       </form>
       <CardList className={'cities__places-list places__list tabs__content' } cardClassName={'cities'} handleCardOver={handleCardOver} />
