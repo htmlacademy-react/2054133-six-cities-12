@@ -12,9 +12,9 @@ type MapProps = {
 
 function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
-  const OffersList = useAppSelector((state) => state.offersList);
+  const offersList = useAppSelector((state) => state.offersList);
 
-  const currentCityData = OffersList[0].city;
+  const currentCityData = offersList[0].city;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, currentCityData);
@@ -44,7 +44,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
 
-      OffersList.forEach((offer) => {
+      offersList.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -57,7 +57,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
           .addTo(markersGroup.current as LayerGroup);
       });
     }
-  }, [map, OffersList, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
+  }, [map, offersList, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>

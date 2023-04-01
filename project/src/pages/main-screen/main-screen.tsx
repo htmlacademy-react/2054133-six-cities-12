@@ -12,14 +12,14 @@ import { useState } from 'react';
 function MainScreen(): JSX.Element {
 
   const currentCity = useAppSelector((state) => state.currentCity);
-  const OffersList = useAppSelector((state) => state.offersList);
+  const offersList = useAppSelector((state) => state.offersList);
 
-  const isOffers = OffersList.length >= 1;
+  const isOffers = offersList.length >= 1;
 
   const getPageEmptyClassName = !isOffers ? ' page__main--index-empty' : '';
 
-  const [currentOfferId, setCurrentOfferId] = useState<number | string>();
-  const handleCardOver = (offerId: number | string) => {
+  const [currentOfferId, setCurrentOfferId] = useState<number>();
+  const handleCardOver = (offerId: number) => {
     if (offerId > 0) {
       return setCurrentOfferId(offerId);
     }
