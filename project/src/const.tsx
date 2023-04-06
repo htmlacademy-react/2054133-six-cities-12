@@ -20,4 +20,14 @@ const OPTIONS = {
   TOP_RATED: 'Top rated first'
 } as const;
 
-export { AppRoute, AuthorizationStatus, CITIES, OPTIONS };
+const defaultCity = 'Paris';
+
+enum ApiRoute {
+  Offers = '/hotels',
+  Offer = '/hotels/{hotelId}',
+  Favorite = '/favorite',
+  Login = '/Login',
+  Logout = 'logout',
+}
+
+export { AppRoute, AuthorizationStatus, CITIES, OPTIONS, defaultCity, ApiRoute };

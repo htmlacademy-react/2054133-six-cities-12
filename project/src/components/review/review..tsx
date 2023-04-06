@@ -10,6 +10,7 @@ type ReviewProps = {
 function Review({review}: ReviewProps): JSX.Element {
   const {user, rating, comment, date} = review;
 
+
   const userRating = getRating(rating);
   const commentDateTime = dayjs(date).format('YYYY-MM-DD');
   const commentDate = dayjs(date).format('MMMM YYYY');

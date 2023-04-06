@@ -1,4 +1,4 @@
-import { useState, ChangeEvent } from 'react';
+import { useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
@@ -8,20 +8,32 @@ import Navigation from '../../components/navigation/navigation';
 import PremiumInfo from '../../components/premium-info/premium-info';
 import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
-import { useAppSelector } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
+import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction } from '../../store/api-action';
+import UserReview from '../../components/user-review/user-review';
+import { AuthorizationStatus } from '../../const';
 
 function RoomScreen(): JSX.Element {
-  const [UserReview, setUserReview] = useState({rating: '', review: ''});
-
-  const offersList = useAppSelector((state) => state.offersList);
-  const reviewList = useAppSelector((state) => state.reviewsList);
 
   const params = useParams();
-  const currentOffer = offersList.find((offer) => offer.id === Number(params.id));
+
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(Number(params.id)));
+    dispatch(fetchNearbyOffersAction(Number(params.id)));
+    dispatch(fetchCommentsAction(Number(params.id)));
+  }, [params.id, dispatch]);
+
+  const currentStateOffer = useAppSelector((state) => state.currentOffer);
+  const reviewList = useAppSelector((state) => state.reviewsList);
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const currentOffer = currentStateOffer.id === Number(params.id) ? currentStateOffer : null;
 
   if (!currentOffer) {
-    return <Navigate to={'/'}/>;
+    return <Navigate to={'*'}/>;
   }
 
   const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentOffer;
@@ -114,63 +126,7 @@ function RoomScreen(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
                 <ReviewList />
-                <form className="reviews__form form" action="#" method="post">
-                  <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                  <div
-                    className="reviews__rating-form form__rating"
-                    onChange={({target}: ChangeEvent<HTMLInputElement>) => setUserReview({...UserReview, [target.name]: target.value})}
-                  >
-                    <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-                    <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-                    <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-                    <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-                    <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-
-                    <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-                    <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                      <svg className="form__star-image" width="37" height="33">
-                        <use xlinkHref="#icon-star"></use>
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea
-                    className="reviews__textarea form__textarea"
-                    id="review"
-                    name="review"
-                    placeholder="Tell how was your stay, what you like and what can be improved"
-                    value={UserReview.review}
-                    onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => setUserReview({...UserReview, [target.name]: target.value})}
-                  >
-                  </textarea>
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                  </div>
-                </form>
+                {authStatus === AuthorizationStatus.Auth && <UserReview />}
               </section>
             </div>
           </div>

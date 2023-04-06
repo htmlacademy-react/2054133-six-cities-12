@@ -3,6 +3,8 @@ import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { useAppSelector } from '../../store';
+import { useParams } from 'react-router-dom';
+import { Offer } from '../../types/offer';
 
 type MapProps = {
   className: string;
@@ -12,7 +14,10 @@ type MapProps = {
 
 function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
-  const offersList = useAppSelector((state) => state.offersList);
+  const param = useParams();
+
+  const offersList = useAppSelector((state) => state.offersListCopy);
+  const nearbyOffersList = useAppSelector((state) => state.nearbyOffersList);
 
   const currentCityData = offersList[0].city;
 
@@ -32,6 +37,15 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
   });
 
   const markersGroup = useRef<LayerGroup>();
+  const currentGroup = useRef<LayerGroup>();
+
+  let offersOnMap: Offer[] = []; // Верное ли решение? Использовать useMemo?
+
+  if (param.id) {
+    offersOnMap = nearbyOffersList;
+  } else {
+    offersOnMap = offersList;
+  }
 
   useEffect(() => {
 
@@ -39,12 +53,15 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
       markersGroup.current?.remove();
       markersGroup.current = new LayerGroup().addTo(map);
 
+      currentGroup.current?.remove();
+      currentGroup.current = new LayerGroup().addTo(map);
+
       map.flyTo([
         currentCityData.location.latitude,
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
 
-      offersList.forEach((offer) => {
+      offersOnMap.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -57,7 +74,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
           .addTo(markersGroup.current as LayerGroup);
       });
     }
-  }, [map, offersList, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
+  }, [map, offersOnMap, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>

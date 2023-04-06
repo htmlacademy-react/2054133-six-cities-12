@@ -13,7 +13,7 @@ type CitiesPlacesProps = {
 function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const offersList = useAppSelector((state) => state.offersList);
+  const offersList = useAppSelector((state) => state.offersListCopy);
 
   const [optionsListClassName, setOptionsListClassName] = useState('');
   const handleClickSorting = () => optionsListClassName ? setOptionsListClassName('') : setOptionsListClassName('places__options--opened');
@@ -38,7 +38,7 @@ function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Ele
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offersList.length} places to stay in Amsterdam</b>
+      <b className="places__found">{offersList.length} places to stay in {currentCity}</b>
       <form className="places__sorting" action="#" method="get" >
         <span className="places__sorting-caption">Sort by</span>
         <span className="places__sorting-type" tabIndex={0} onClick={handleClickSorting}>

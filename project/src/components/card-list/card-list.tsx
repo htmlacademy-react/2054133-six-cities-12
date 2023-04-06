@@ -10,8 +10,8 @@ type CardListProps = {
 
 function CardList({className, cardClassName, handleCardOver}: CardListProps) {
 
-  const offersList = useAppSelector((state) => state.offersList);
-  const nearbyOffersList = useAppSelector((state) => state.nearbyOffersList).slice(-3);
+  const offersList = useAppSelector((state) => state.offersListCopy);
+  const nearbyOffersList = useAppSelector((state) => state.nearbyOffersList);
 
   const param = useParams();
   const isMainScreen = () => !param.id;
@@ -21,7 +21,7 @@ function CardList({className, cardClassName, handleCardOver}: CardListProps) {
       {
         isMainScreen()
           ? offersList.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)
-          : nearbyOffersList.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)
+          : nearbyOffersList?.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)
       }
     </div>
   );
