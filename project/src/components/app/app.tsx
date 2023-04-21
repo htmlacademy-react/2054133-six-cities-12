@@ -7,11 +7,8 @@ import MainScreen from '../../pages/main-screen/main-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
-import { useAppSelector } from '../../store';
 
 function App(): JSX.Element {
-
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   return (
     <BrowserRouter>
@@ -20,9 +17,9 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
+              <PrivateRoute >
                 <FavoritesScreen />
-              </PrivateRoute>
+              </PrivateRoute >
             }
           />
           <Route

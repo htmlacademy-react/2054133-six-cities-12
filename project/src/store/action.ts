@@ -14,6 +14,7 @@ const Action = {
   LOADING_STATUS: 'LOADING_STATUS',
   NEARBY_OFFERS: 'NEARBY_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
+  ADD_COMMENT: 'ADD_COMMENT'
 } as const;
 
 const loadOffersAction = createAction<Offer[]>(Action.LOAD_OFFERS);
@@ -25,6 +26,8 @@ const loadOfferAction = createAction<Offer>(Action.LOAD_OFFER);
 const loadNearbyOffersAction = createAction<Offer[]>(Action.NEARBY_OFFERS);
 
 const loadComments = createAction<UserComment[]>(Action.LOAD_COMMENTS);
+
+const addReview = createAction<UserComment>(Action.ADD_COMMENT);
 
 const changeCityAction = createAction(Action.CHANGE_CITY, (city: string) => ({payload: city}));
 
@@ -47,5 +50,6 @@ export {
   loadFavoritesAction,
   loadOfferAction,
   setOffersDataLoadingStatus,
-  loadComments
+  loadComments,
+  addReview
 };

@@ -2,6 +2,7 @@ import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} fro
 import { getToken } from './token';
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
+import { URL } from '../const';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -10,8 +11,6 @@ const StatusCodeMapping: Record<number, boolean> = {
 };
 
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
-
-const URL = 'https://12.react.pages.academy/six-cities';
 
 const REQUEST_TIMEOUT = 5000;
 
@@ -37,7 +36,7 @@ const createApi = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        toast(error.response.data.error);
+        toast.info(error.response.data.error);
       }
 
       throw error;

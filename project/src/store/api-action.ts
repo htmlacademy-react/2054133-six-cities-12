@@ -2,12 +2,13 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import { Offer } from '../types/offer';
-import { loadOfferAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments } from './action';
+import { loadOfferAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, addReview } from './action';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import AuthData from '../types/auth-data';
 import UserData from '../types/user-data';
 import { dropToken, saveToken } from '../services/token';
-import { UserComment } from '../types/user';
+import { Review, UserComment } from '../types/user';
+import { toast } from 'react-toastify';
 
 const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -22,7 +23,7 @@ const fetchOffersAction = createAsyncThunk<void, undefined, {
       dispatch(setOffersDataLoadingStatus(false));
       dispatch(loadOffersAction(data));
     }
-    catch (error) { console.log('Error'); }
+    catch (error) { toast.error('Whoops, failed to get data from the server'); }
   },
 );
 
@@ -33,11 +34,8 @@ const fetchFavoritesAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchFavorites',
   async (_arg, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
-      dispatch(loadFavoritesAction(data));
-    }
-    catch (error) { console.log('Error'); }
+    const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
+    dispatch(loadFavoritesAction(data));
   },
 );
 
@@ -49,10 +47,12 @@ const fetchOfferAction = createAsyncThunk<void, number, {
   'data/fetchOffer',
   async (offerId, {dispatch, extra: api}) => {
     try {
+      dispatch(setOffersDataLoadingStatus(true));
       const {data} = await api.get<Offer>(`/hotels/${offerId}`);
+      dispatch(setOffersDataLoadingStatus(false));
       dispatch(loadOfferAction(data));
     }
-    catch (error) { console.log('Error'); }
+    catch (error) { toast.error('Whoops, failed to get data from the server'); }
   },
 );
 
@@ -67,7 +67,7 @@ const fetchNearbyOffersAction = createAsyncThunk<void, number, {
       const {data} = await api.get<Offer[]>(`/hotels/${offerId}/nearby`);
       dispatch(loadNearbyOffersAction(data));
     }
-    catch (error) { console.log('Error'); }
+    catch (error) { toast.error('Whoops, failed to get data from the server'); }
   },
 );
 
@@ -76,13 +76,28 @@ const fetchCommentsAction = createAsyncThunk<void, number, {
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchNearbyOffers',
+  'data/fetchCommentsAction',
   async (offerId, {dispatch, extra: api}) => {
     try {
       const {data} = await api.get<UserComment[]>(`/comments/${offerId}`);
       dispatch(loadComments(data));
     }
-    catch (error) { console.log('Error'); }
+    catch (error) { toast.error('Whoops, failed to get data from the server'); }
+  },
+);
+
+const sendReviewAction = createAsyncThunk<void, Review, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/sendReview',
+  async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
+    try {
+      const {data: review} = await api.post<UserComment>(`/comments/${hotelId}`, {comment, rating});
+      dispatch(addReview(review));
+    }
+    catch (error) { toast.error('Whoops, failed to post data to the server'); }
   },
 );
 
@@ -129,4 +144,4 @@ const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction };
+export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction };

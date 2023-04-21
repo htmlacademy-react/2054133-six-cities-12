@@ -1,10 +1,9 @@
 import leaflet, { LayerGroup } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { useAppSelector } from '../../store';
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../types/offer';
 
 type MapProps = {
   className: string;
@@ -37,15 +36,16 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
   });
 
   const markersGroup = useRef<LayerGroup>();
-  const currentGroup = useRef<LayerGroup>();
 
-  let offersOnMap: Offer[] = []; // Верное ли решение? Использовать useMemo?
-
-  if (param.id) {
-    offersOnMap = nearbyOffersList;
-  } else {
-    offersOnMap = offersList;
-  }
+  const mapOffers = useMemo(() => {
+    if (param.id) {
+      const currentOffer = offersList.find((offer) => offer.id === Number(param.id));
+      if (currentOffer) {
+        return [currentOffer, ...nearbyOffersList];
+      }
+    }
+    return offersList;
+  }, [nearbyOffersList, offersList, param.id]);
 
   useEffect(() => {
 
@@ -53,28 +53,25 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
       markersGroup.current?.remove();
       markersGroup.current = new LayerGroup().addTo(map);
 
-      currentGroup.current?.remove();
-      currentGroup.current = new LayerGroup().addTo(map);
-
       map.flyTo([
         currentCityData.location.latitude,
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
 
-      offersOnMap.forEach((offer) => {
+      mapOffers.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
             lng: offer.location.longitude,
           }, {
-            icon: (offer.id === currentOfferId)
+            icon: (offer.id === currentOfferId) || (offer.id === Number(param.id))
               ? currentCustomIcon
               : defaultCustomIcon,
           })
           .addTo(markersGroup.current as LayerGroup);
       });
     }
-  }, [map, offersOnMap, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId]);
+  }, [map, mapOffers, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId, param.id]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>

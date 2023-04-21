@@ -1,11 +1,11 @@
 import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import { FormEvent, useRef } from 'react';
-import { useAppDispatch } from '../../store';
-import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import AuthData from '../../types/auth-data';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 
 function LoginScreen(): JSX.Element {
 
@@ -14,6 +14,7 @@ function LoginScreen(): JSX.Element {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
@@ -28,8 +29,14 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
-    navigate(AppRoute.Main);
+    navigate(-1);
   };
+
+  if (authStatus === AuthorizationStatus.Auth) {
+    return (
+      <Navigate to={AppRoute.Main} />
+    );
+  }
 
   return (
     <div className="page page--gray page--login">
@@ -56,7 +63,7 @@ function LoginScreen(): JSX.Element {
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
-                <input className="login__input form__input" type="password" name="password" placeholder="Password" ref={passwordRef} required/>
+                <input className="login__input form__input" type="password" name="password" placeholder="Password" pattern="(?=.*\d)(?=.*[A-Za-zА]).{2,}" title="The password must contain at least one letter and a number" ref={passwordRef} required/>
               </div>
               <button className="login__submit form__submit button" type="submit" >Sign in</button>
             </form>

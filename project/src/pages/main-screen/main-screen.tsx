@@ -10,12 +10,14 @@ import { useEffect, useState } from 'react';
 import { changeCityAction, filteringOffersAction } from '../../store/action';
 import { AuthorizationStatus, defaultCity } from '../../const';
 import { fetchFavoritesAction } from '../../store/api-action';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function MainScreen(): JSX.Element {
 
   const currentCity = useAppSelector((state) => state.currentCity);
   const offersList = useAppSelector((state) => state.offersListCopy);
   const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isLoading = useAppSelector((state) => state.isLoadingOffersData);
 
   const isOffers = offersList.length >= 1;
 
@@ -37,7 +39,11 @@ function MainScreen(): JSX.Element {
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
     }
-  }, []); // такой вариант ок?
+  }, []);
+
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
 
   return (
     <div className={`page page--gray page--main${getPageEmptyClassName}`}>
@@ -63,7 +69,8 @@ function MainScreen(): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            {isOffers ? <CitiesPlaces handleCardOver={handleCardOver} currentCity={currentCity}/> : <NoCitiesPlaces />}
+            {(isOffers && !isLoading) && <CitiesPlaces handleCardOver={handleCardOver} currentCity={currentCity}/>}
+            {(!isOffers && !isLoading) && <NoCitiesPlaces />}
             <div className="cities__right-section">
               {isOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
             </div>

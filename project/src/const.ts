@@ -30,4 +30,6 @@ enum ApiRoute {
   Logout = 'logout',
 }
 
-export { AppRoute, AuthorizationStatus, CITIES, OPTIONS, defaultCity, ApiRoute };
+const URL = 'https://12.react.pages.academy/six-cities';
+
+export { AppRoute, AuthorizationStatus, CITIES, OPTIONS, defaultCity, ApiRoute, URL };

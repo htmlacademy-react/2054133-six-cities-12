@@ -13,6 +13,7 @@ import { getRating } from '../../utils';
 import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction } from '../../store/api-action';
 import UserReview from '../../components/user-review/user-review';
 import { AuthorizationStatus } from '../../const';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 function RoomScreen(): JSX.Element {
 
@@ -29,14 +30,23 @@ function RoomScreen(): JSX.Element {
   const currentStateOffer = useAppSelector((state) => state.currentOffer);
   const reviewList = useAppSelector((state) => state.reviewsList);
   const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isLoading = useAppSelector((state) => state.isLoadingOffersData);
 
-  const currentOffer = currentStateOffer.id === Number(params.id) ? currentStateOffer : null;
+  // const currentOffer = currentStateOffer.id === Number(params.id) ? currentStateOffer : null;
 
-  if (!currentOffer) {
+  if (!currentStateOffer && isLoading) {
+    return <LoadingScreen />;
+  }
+
+  if (!currentStateOffer && !isLoading) {
     return <Navigate to={'*'}/>;
   }
 
-  const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentOffer;
+  if (!currentStateOffer) {
+    return <Navigate to={'*'}/>;
+  }
+
+  const {description, host, title, images, isPremium, rating, isFavorite, type, bedrooms, maxAdults, price, goods} = currentStateOffer;
 
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
@@ -126,7 +136,7 @@ function RoomScreen(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
                 <ReviewList />
-                {authStatus === AuthorizationStatus.Auth && <UserReview />}
+                {authStatus === AuthorizationStatus.Auth && <UserReview offerId={Number(params.id)}/>}
               </section>
             </div>
           </div>

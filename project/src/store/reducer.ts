@@ -5,16 +5,29 @@ import { loadOfferAction, changeCityAction, filteringOffersAction, loadFavorites
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
 
-const initialState = {
+type TInitialState = {
+  currentCity: string;
+  offersList: Offer[];
+  offersListCopy: Offer[];
+  favoriteOffersList: Offer[];
+  favoriteOffersListCopy: Offer[];
+  currentOffer: Offer | null;
+  isLoadingOffersData: boolean;
+  reviewsList: UserComment[];
+  nearbyOffersList : Offer[];
+  authorizationStatus: AuthorizationStatus;
+}
+
+const initialState: TInitialState = {
   currentCity: defaultCity,
-  offersList: [] as Offer[],
-  offersListCopy: [] as Offer[],
-  favoriteOffersList: [] as Offer[],
-  favoriteOffersListCopy: [] as Offer[],
-  currentOffer: {} as Offer,
+  offersList: [],
+  offersListCopy: [],
+  favoriteOffersList: [],
+  favoriteOffersListCopy: [],
+  currentOffer: null,
   isLoadingOffersData: false,
-  reviewsList: [] as UserComment[],
-  nearbyOffersList : [] as Offer[],
+  reviewsList: [],
+  nearbyOffersList : [],
   authorizationStatus: AuthorizationStatus.Unknown,
 };
 
