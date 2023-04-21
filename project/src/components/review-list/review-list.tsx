@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../store';
+import { SortDate } from '../../utils';
 import Review from '../review/review.';
 
 function ReviewList(): JSX.Element {
@@ -7,7 +8,7 @@ function ReviewList(): JSX.Element {
 
   return (
     <ul className="reviews__list">
-      {reviewList.slice(-10).map((review) => <Review key={review.id} review={review}/>)}
+      {reviewList.slice(-10).sort(SortDate).map((review) => <Review key={review.id} review={review}/>)}
     </ul>
   );
 }
