@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../store';
 import { fetchCommentsAction, sendReviewAction } from '../../store/api-action';
+import { MIN_COMMENT_LENGTH, MIN_RATING } from '../../const';
 
 type userReviewProps = {
   offerId: number;
@@ -16,28 +17,28 @@ function UserReview({offerId}: userReviewProps) {
     setUserComment({comment: '', rating: 0,});
   };
 
+  const buttonState = () => {
+    if (userComment.rating < MIN_RATING || userComment.comment.length <= MIN_COMMENT_LENGTH) {
+      return true;
+    }
+  };
+
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
     if (buttonState()) {
-      return null;
+      return;
     }
 
-    const data = {
+    const reviewData = {
       hotelId: offerId,
       comment: userComment.comment,
       rating: userComment.rating,
     };
 
-    dispatch(sendReviewAction(data));
+    dispatch(sendReviewAction(reviewData));
     clearForm();
     dispatch(fetchCommentsAction(Number(offerId)));
-  };
-
-  const buttonState = () => {
-    if (userComment.rating < 1 || userComment.comment.length <= 50) {
-      return true;
-    }
   };
 
   return (

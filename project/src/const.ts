@@ -32,4 +32,8 @@ enum ApiRoute {
 
 const URL = 'https://12.react.pages.academy/six-cities';
 
-export { AppRoute, AuthorizationStatus, CITIES, OPTIONS, defaultCity, ApiRoute, URL };
+const MIN_RATING = 1;
+
+const MIN_COMMENT_LENGTH = 50;
+
+export { AppRoute, AuthorizationStatus, CITIES, OPTIONS, defaultCity, ApiRoute, URL, MIN_RATING, MIN_COMMENT_LENGTH };

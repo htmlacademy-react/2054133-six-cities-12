@@ -2,7 +2,15 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import { Offer } from '../types/offer';
-import { loadOfferAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, addReview, getMail } from './action';
+import { loadOfferAction,
+  loadFavoritesAction,
+  loadOffersAction,
+  requierAuthorizationStatus,
+  setOffersDataLoadingStatus,
+  loadNearbyOffersAction,
+  loadComments,
+  addReview,
+  getUserData } from './action';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import AuthData from '../types/auth-data';
 import UserData from '../types/user-data';
@@ -147,8 +155,8 @@ const fetchUserDataAction = createAsyncThunk<void, undefined, {
   'data/fetchUserData',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<UserData>(ApiRoute.Login);
-    dispatch(getMail(data));
-  },
+    dispatch(getUserData(data));
+  }
 );
 
 const logoutAction = createAsyncThunk<void, undefined, {

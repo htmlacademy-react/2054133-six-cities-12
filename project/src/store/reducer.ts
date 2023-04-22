@@ -11,7 +11,8 @@ import { loadOfferAction,
   setOffersDataLoadingStatus,
   loadNearbyOffersAction,
   loadComments,
-  getMail
+  getUserData,
+  removeUserData
 } from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
@@ -93,7 +94,10 @@ const reducer = createReducer(initialState, (builder) => {
         state.offersListCopy = state.offersListCopy.sort(SortTopRating);
       }
     })
-    .addCase(getMail, (state, action) => {
+    .addCase(getUserData, (state, action) => {
+      state.userLogin = action.payload;
+    })
+    .addCase(removeUserData, (state, action) => {
       state.userLogin = action.payload;
     });
 });

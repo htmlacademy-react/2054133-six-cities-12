@@ -9,7 +9,7 @@ import NoCitiesPlaces from '../../components/no-cities-places/no-cities-places';
 import { useEffect, useState } from 'react';
 import { changeCityAction, filteringOffersAction } from '../../store/action';
 import { AuthorizationStatus, defaultCity } from '../../const';
-import { fetchFavoritesAction } from '../../store/api-action';
+import { fetchFavoritesAction, fetchUserDataAction } from '../../store/api-action';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 function MainScreen(): JSX.Element {
@@ -39,6 +39,7 @@ function MainScreen(): JSX.Element {
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
     }
+    dispatch(fetchUserDataAction());
   }, []);
 
   if (isLoading) {

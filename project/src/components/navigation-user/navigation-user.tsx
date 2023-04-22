@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../store';
 import { AppRoute } from '../../const';
 
+
 function NavigationUser(): JSX.Element {
 
   const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);

@@ -17,7 +17,7 @@ const Action = {
   LOAD_COMMENTS: 'LOAD_COMMENTS',
   ADD_COMMENT: 'ADD_COMMENT',
   USER_LOGIN: 'USER_LOGIN',
-  GET_MAIL: 'GET_MAIL',
+  GET_USER_DATA: 'GET_USER_DATA',
 } as const;
 
 const loadOffersAction = createAction<Offer[]>(Action.LOAD_OFFERS);
@@ -42,9 +42,9 @@ const requierAuthorizationStatus = createAction<AuthorizationStatus>(Action.AUTO
 
 const setOffersDataLoadingStatus = createAction<boolean>(Action.LOADING_STATUS);
 
-const setUserLogin = createAction<string>(Action.USER_LOGIN);
+const getUserData = createAction<UserData>(Action.GET_USER_DATA);
 
-const getMail = createAction<UserData>(Action.GET_MAIL);
+const removeUserData = createAction<null>(Action.USER_LOGIN);
 
 export {
   loadOffersAction,
@@ -59,6 +59,6 @@ export {
   setOffersDataLoadingStatus,
   loadComments,
   addReview,
-  setUserLogin,
-  getMail
+  getUserData,
+  removeUserData
 };

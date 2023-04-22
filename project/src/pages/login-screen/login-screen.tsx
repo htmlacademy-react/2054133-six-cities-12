@@ -6,7 +6,6 @@ import { Navigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import AuthData from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { setUserLogin } from '../../store/action';
 
 function LoginScreen(): JSX.Element {
 
@@ -28,7 +27,6 @@ function LoginScreen(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
-      dispatch(setUserLogin(loginRef.current.value));
     }
   };
 

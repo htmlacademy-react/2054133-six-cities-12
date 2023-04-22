@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { logoutAction } from '../../store/api-action';
+import { removeUserData } from '../../store/action';
 
 function NavigationAuth() {
 
@@ -8,6 +9,7 @@ function NavigationAuth() {
 
   const handleOutClick = () => {
     dispatch(logoutAction());
+    dispatch(removeUserData(null));
   };
 
   return(
