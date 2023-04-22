@@ -139,12 +139,12 @@ const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
-const fetchEmail = createAsyncThunk<void, undefined, {
+const fetchUserDataAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'data/fetchEmail',
+  'data/fetchUserData',
   async (_arg, {dispatch, extra: api}) => {
     const {data} = await api.get<UserData>(ApiRoute.Login);
     dispatch(getMail(data));
@@ -164,4 +164,4 @@ const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction, fetchEmail };
+export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction, fetchUserDataAction };

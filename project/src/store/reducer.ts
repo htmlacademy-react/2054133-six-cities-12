@@ -1,10 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, OPTIONS, defaultCity } from '../const';
 import { SortToHigh, SortToLow, SortTopRating } from '../utils';
-import { loadOfferAction, changeCityAction, filteringOffersAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, sortingOffersAction, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, setUserLogin, addReview, getMail } from './action';
+import { loadOfferAction,
+  changeCityAction,
+  filteringOffersAction,
+  loadFavoritesAction,
+  loadOffersAction,
+  requierAuthorizationStatus,
+  sortingOffersAction,
+  setOffersDataLoadingStatus,
+  loadNearbyOffersAction,
+  loadComments,
+  getMail
+} from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
-import { fetchEmail } from './api-action';
 import UserData from '../types/user-data';
 
 type TInitialState = {
@@ -28,7 +38,7 @@ const initialState: TInitialState = {
   favoriteOffersList: [],
   favoriteOffersListCopy: [],
   currentOffer: null,
-  isLoadingOffersData: false,
+  isLoadingOffersData: true,
   reviewsList: [],
   nearbyOffersList : [],
   authorizationStatus: AuthorizationStatus.Unknown,

@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../store';
-import { sendReviewAction } from '../../store/api-action';
+import { fetchCommentsAction, sendReviewAction } from '../../store/api-action';
 
 type userReviewProps = {
   offerId: number;
@@ -31,6 +31,7 @@ function UserReview({offerId}: userReviewProps) {
 
     dispatch(sendReviewAction(data));
     clearForm();
+    dispatch(fetchCommentsAction(Number(offerId)));
   };
 
   const buttonState = () => {
