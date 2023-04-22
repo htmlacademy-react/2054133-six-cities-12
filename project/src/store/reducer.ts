@@ -1,9 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, OPTIONS, defaultCity } from '../const';
 import { SortToHigh, SortToLow, SortTopRating } from '../utils';
-import { loadOfferAction, changeCityAction, filteringOffersAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, sortingOffersAction, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments } from './action';
+import { loadOfferAction, changeCityAction, filteringOffersAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, sortingOffersAction, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, setUserLogin, addReview, getMail } from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
+import { fetchEmail } from './api-action';
+import UserData from '../types/user-data';
 
 type TInitialState = {
   currentCity: string;
@@ -16,6 +18,7 @@ type TInitialState = {
   reviewsList: UserComment[];
   nearbyOffersList : Offer[];
   authorizationStatus: AuthorizationStatus;
+  userLogin: UserData | null;
 }
 
 const initialState: TInitialState = {
@@ -29,6 +32,7 @@ const initialState: TInitialState = {
   reviewsList: [],
   nearbyOffersList : [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  userLogin: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -62,6 +66,9 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadComments, (state, action) => {
       state.reviewsList = action.payload;
     })
+    // .addCase(addReview, (state, action) => {
+    //   state.reviewsList = state.reviewsList.push(action.payload);
+    // })
     .addCase(sortingOffersAction, (state, action) => {
       if (action.payload.sortType === OPTIONS.POPULAR) {
         state.offersListCopy = state.offersListCopy.filter((offer) => offer.city.name === action.payload.city);
@@ -75,6 +82,9 @@ const reducer = createReducer(initialState, (builder) => {
       if (action.payload.sortType === OPTIONS.TOP_RATED) {
         state.offersListCopy = state.offersListCopy.sort(SortTopRating);
       }
+    })
+    .addCase(getMail, (state, action) => {
+      state.userLogin = action.payload;
     });
 });
 

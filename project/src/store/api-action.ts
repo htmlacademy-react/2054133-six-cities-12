@@ -2,7 +2,7 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import { Offer } from '../types/offer';
-import { loadOfferAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, addReview } from './action';
+import { loadOfferAction, loadFavoritesAction, loadOffersAction, requierAuthorizationStatus, setOffersDataLoadingStatus, loadNearbyOffersAction, loadComments, addReview, getMail } from './action';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import AuthData from '../types/auth-data';
 import UserData from '../types/user-data';
@@ -17,13 +17,17 @@ const fetchOffersAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchOffers',
   async (_arg, {dispatch, extra: api}) => {
+    dispatch(setOffersDataLoadingStatus(true));
     try {
-      dispatch(setOffersDataLoadingStatus(true));
       const {data} = await api.get<Offer[]>(ApiRoute.Offers);
-      dispatch(setOffersDataLoadingStatus(false));
       dispatch(loadOffersAction(data));
     }
-    catch (error) { toast.error('Whoops, failed to get data from the server'); }
+    catch (error) {
+      toast.error('Whoops, failed to get data from the server');
+    }
+    finally {
+      dispatch(setOffersDataLoadingStatus(false));
+    }
   },
 );
 
@@ -46,13 +50,17 @@ const fetchOfferAction = createAsyncThunk<void, number, {
 }>(
   'data/fetchOffer',
   async (offerId, {dispatch, extra: api}) => {
+    dispatch(setOffersDataLoadingStatus(true));
     try {
-      dispatch(setOffersDataLoadingStatus(true));
       const {data} = await api.get<Offer>(`/hotels/${offerId}`);
-      dispatch(setOffersDataLoadingStatus(false));
       dispatch(loadOfferAction(data));
     }
-    catch (error) { toast.error('Whoops, failed to get data from the server'); }
+    catch (error) {
+      toast.error('Whoops, failed to get data from the server');
+    }
+    finally {
+      dispatch(setOffersDataLoadingStatus(false));
+    }
   },
 );
 
@@ -131,6 +139,18 @@ const loginAction = createAsyncThunk<void, AuthData, {
   },
 );
 
+const fetchEmail = createAsyncThunk<void, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchEmail',
+  async (_arg, {dispatch, extra: api}) => {
+    const {data} = await api.get<UserData>(ApiRoute.Login);
+    dispatch(getMail(data));
+  },
+);
+
 const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
@@ -144,4 +164,4 @@ const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction };
+export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction, fetchEmail };

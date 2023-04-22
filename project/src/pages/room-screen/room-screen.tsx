@@ -32,14 +32,8 @@ function RoomScreen(): JSX.Element {
   const authStatus = useAppSelector((state) => state.authorizationStatus);
   const isLoading = useAppSelector((state) => state.isLoadingOffersData);
 
-  // const currentOffer = currentStateOffer.id === Number(params.id) ? currentStateOffer : null;
-
-  if (!currentStateOffer && isLoading) {
+  if (isLoading) {
     return <LoadingScreen />;
-  }
-
-  if (!currentStateOffer && !isLoading) {
-    return <Navigate to={'*'}/>;
   }
 
   if (!currentStateOffer) {

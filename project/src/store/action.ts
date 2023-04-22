@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { AuthorizationStatus } from '../const';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
+import UserData from '../types/user-data';
 
 const Action = {
   LOAD_OFFERS: 'LOAD_OFFERS',
@@ -14,7 +15,9 @@ const Action = {
   LOADING_STATUS: 'LOADING_STATUS',
   NEARBY_OFFERS: 'NEARBY_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
-  ADD_COMMENT: 'ADD_COMMENT'
+  ADD_COMMENT: 'ADD_COMMENT',
+  USER_LOGIN: 'USER_LOGIN',
+  GET_MAIL: 'GET_MAIL',
 } as const;
 
 const loadOffersAction = createAction<Offer[]>(Action.LOAD_OFFERS);
@@ -39,6 +42,10 @@ const requierAuthorizationStatus = createAction<AuthorizationStatus>(Action.AUTO
 
 const setOffersDataLoadingStatus = createAction<boolean>(Action.LOADING_STATUS);
 
+const setUserLogin = createAction<string>(Action.USER_LOGIN);
+
+const getMail = createAction<UserData>(Action.GET_MAIL);
+
 export {
   loadOffersAction,
   Action,
@@ -51,5 +58,7 @@ export {
   loadOfferAction,
   setOffersDataLoadingStatus,
   loadComments,
-  addReview
+  addReview,
+  setUserLogin,
+  getMail
 };

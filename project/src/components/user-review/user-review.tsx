@@ -34,7 +34,7 @@ function UserReview({offerId}: userReviewProps) {
   };
 
   const buttonState = () => {
-    if (userComment.rating < 1 && userComment.comment.length <= 50) {
+    if (userComment.rating < 1 || userComment.comment.length <= 50) {
       return true;
     }
   };

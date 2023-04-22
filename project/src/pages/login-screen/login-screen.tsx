@@ -2,10 +2,11 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import AuthData from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { setUserLogin } from '../../store/action';
 
 function LoginScreen(): JSX.Element {
 
@@ -13,7 +14,6 @@ function LoginScreen(): JSX.Element {
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const authStatus = useAppSelector((state) => state.authorizationStatus);
 
   const onSubmit = (authData: AuthData) => {
@@ -28,8 +28,8 @@ function LoginScreen(): JSX.Element {
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
+      dispatch(setUserLogin(loginRef.current.value));
     }
-    navigate(-1);
   };
 
   if (authStatus === AuthorizationStatus.Auth) {
