@@ -7,6 +7,7 @@ import UserData from '../types/user-data';
 const Action = {
   LOAD_OFFERS: 'LOAD_OFFERS',
   LOAD_FAVORITES: 'LOAD_FAVORITES',
+  ADD_FAVORITE_OFFER: 'ADD_FAVORITE_OFFER',
   LOAD_OFFER: 'LOAD_OFFER',
   CHANGE_CITY: 'CHANGE_CITY',
   FILTER_OFFERS: 'FILTER_OFFERS',
@@ -24,6 +25,8 @@ const Action = {
 const loadOffersAction = createAction<Offer[]>(Action.LOAD_OFFERS);
 
 const loadFavoritesAction = createAction<Offer[]>(Action.LOAD_FAVORITES);
+
+const addFavoritesAction = createAction<Offer>(Action.ADD_FAVORITE_OFFER);
 
 const loadOfferAction = createAction<Offer>(Action.LOAD_OFFER);
 
@@ -58,11 +61,12 @@ export {
   sortingOffersAction,
   requierAuthorizationStatus,
   loadFavoritesAction,
+  addFavoritesAction,
   loadOfferAction,
   setOffersDataLoadingStatus,
   setRoomDataLoadingStatus,
   loadComments,
   addReview,
   getUserData,
-  removeUserData
+  removeUserData,
 };

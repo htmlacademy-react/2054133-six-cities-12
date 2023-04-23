@@ -8,7 +8,7 @@ type FavoriteCardProps = {
 
 function FavoriteCard({city}: FavoriteCardProps) {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
+  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
 
   return (
     <li className="favorites__locations-items">
@@ -27,7 +27,7 @@ function FavoriteCard({city}: FavoriteCardProps) {
 
           if (offer.city.name === city) {
             return (
-              <article className="favorites__card place-card" key="">
+              <article className="favorites__card place-card" key={offer.id}>
                 {offer.isPremium && <PremiumInfo className="place-card__mark"/>}
                 <div className="favorites__image-wrapper place-card__image-wrapper">
                   <a href="/">

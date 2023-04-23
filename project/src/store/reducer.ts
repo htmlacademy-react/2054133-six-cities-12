@@ -14,7 +14,8 @@ import { loadOfferAction,
   getUserData,
   removeUserData,
   setRoomDataLoadingStatus,
-  addReview
+  addReview,
+  addFavoritesAction
 } from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
@@ -59,6 +60,17 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadFavoritesAction, (state, action) => {
       state.favoriteOffersList = action.payload;
       state.favoriteOffersListCopy = action.payload;
+    })
+    .addCase(addFavoritesAction, (state, action) => { //favorites
+      const data = action.payload;
+      const currentOffer = state.favoriteOffersListCopy.find((item) => item.id === data.id);
+      if (currentOffer) {
+        state.favoriteOffersListCopy = state.favoriteOffersListCopy.filter((offer) => offer.id !== currentOffer.id);
+        // state.offersListCopy
+      }
+      else {
+        state.favoriteOffersListCopy = [...state.favoriteOffersListCopy, data];
+      }
     })
     .addCase(changeCityAction, (state, action) => {
       state.currentCity = action.payload;

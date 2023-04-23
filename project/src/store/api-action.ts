@@ -13,6 +13,7 @@ import {
   loadComments,
   addReview,
   getUserData,
+  addFavoritesAction,
 } from './action';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import AuthData from '../types/auth-data';
@@ -55,6 +56,28 @@ const fetchFavoritesAction = createAsyncThunk<void, undefined, {
     }
     catch (error) {
       toast.error('Whoops, failed to get data from the server');
+    }
+  },
+);
+
+type favor = {
+  id: number;
+  isFavorite: number;
+}
+
+const sendFavoritesAction = createAsyncThunk<void, favor, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/sendFavorites',
+  async ({id, isFavorite}, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.post<Offer>(`favorite/${id}/${isFavorite}`);
+      dispatch(addFavoritesAction(data));
+    }
+    catch (error) {
+      toast.error('Whoops, failed to post data to the server');
     }
   },
 );
@@ -201,5 +224,6 @@ export {
   loginAction,
   logoutAction,
   sendReviewAction,
-  fetchUserDataAction
+  fetchUserDataAction,
+  sendFavoritesAction
 };

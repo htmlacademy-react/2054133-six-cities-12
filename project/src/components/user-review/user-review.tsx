@@ -13,7 +13,7 @@ function UserReview({offerId}: userReviewProps) {
 
   const dispatch = useAppDispatch();
 
-  const clearForm = () => {
+  const cleanForm = () => {
     setUserComment({comment: '', rating: 0,});
   };
 
@@ -37,7 +37,7 @@ function UserReview({offerId}: userReviewProps) {
     };
 
     dispatch(sendReviewAction(reviewData));
-    clearForm();
+    cleanForm();
   };
 
   return (

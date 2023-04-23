@@ -22,7 +22,7 @@ function FavoriteList() {
 
   return (
     <ul className="favorites__list">
-      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCard key="" city={city} />)}
+      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCard key={city} city={city} />)}
     </ul>
   );
 }
