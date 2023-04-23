@@ -38,8 +38,8 @@ function MainScreen(): JSX.Element {
     dispatch(filteringOffersAction(defaultCity));
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
+      dispatch(fetchUserDataAction());
     }
-    dispatch(fetchUserDataAction());
   }, []);
 
   if (isLoading) {

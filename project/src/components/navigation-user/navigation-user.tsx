@@ -5,7 +5,7 @@ import { AppRoute } from '../../const';
 
 function NavigationUser(): JSX.Element {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
+  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
   const userMail = useAppSelector((state) => state.userLogin);
 
   const getFavoritesCount = favoritesList.reduce((acc, item) => {

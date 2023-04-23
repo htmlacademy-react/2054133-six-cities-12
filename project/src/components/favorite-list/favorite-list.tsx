@@ -4,7 +4,7 @@ import { useAppSelector } from '../../store';
 
 function FavoriteList() {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
+  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
 
   const getFavoriteCities = () => {
 
