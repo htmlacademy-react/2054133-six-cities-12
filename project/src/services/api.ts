@@ -3,6 +3,7 @@ import { getToken } from './token';
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
 import { URL } from '../const';
+import { ToastContent } from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -14,15 +15,15 @@ const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[resp
 
 const REQUEST_TIMEOUT = 5000;
 
-const debounce = (callback: (...args: any) => void, timeoutDelay = 20) => {
-  let timeoutId: NodeJS.Timeout;
-  return (...rest: any) => {
-    clearTimeout(timeoutId);
-    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-  };
-};
+// const debounce = (callback: (...args: ToastContent[]) => void, timeoutDelay = 20) => {
+//   let timeoutId: NodeJS.Timeout;
+//   return (...rest: ToastContent[]) => {
+//     clearTimeout(timeoutId);
+//     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+//   };
+// };
 
-const handlerError = debounce(toast.info);
+// const handlerError = debounce(toast.info);
 
 const createApi = (): AxiosInstance => {
   const api = axios.create({
@@ -46,7 +47,7 @@ const createApi = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        handlerError(error.response.data.error);
+        toast.info(error.response.data.error);
       }
       throw error;
     }
