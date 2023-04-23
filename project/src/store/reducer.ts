@@ -12,7 +12,9 @@ import { loadOfferAction,
   loadNearbyOffersAction,
   loadComments,
   getUserData,
-  removeUserData
+  removeUserData,
+  setRoomDataLoadingStatus,
+  addReview
 } from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
@@ -26,6 +28,7 @@ type TInitialState = {
   favoriteOffersListCopy: Offer[];
   currentOffer: Offer | null;
   isLoadingOffersData: boolean;
+  isLoadingRoomData: boolean;
   reviewsList: UserComment[];
   nearbyOffersList : Offer[];
   authorizationStatus: AuthorizationStatus;
@@ -40,6 +43,7 @@ const initialState: TInitialState = {
   favoriteOffersListCopy: [],
   currentOffer: null,
   isLoadingOffersData: true,
+  isLoadingRoomData: true,
   reviewsList: [],
   nearbyOffersList : [],
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -74,12 +78,15 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(setOffersDataLoadingStatus, (state, action) => {
       state.isLoadingOffersData = action.payload;
     })
+    .addCase(setRoomDataLoadingStatus, (state, action) => {
+      state.isLoadingRoomData = action.payload;
+    })
     .addCase(loadComments, (state, action) => {
       state.reviewsList = action.payload;
     })
-    // .addCase(addReview, (state, action) => {
-    //   state.reviewsList = state.reviewsList.push(action.payload);
-    // })
+    .addCase(addReview, (state, action) => {
+      state.reviewsList = action.payload;
+    })
     .addCase(sortingOffersAction, (state, action) => {
       if (action.payload.sortType === OPTIONS.POPULAR) {
         state.offersListCopy = state.offersListCopy.filter((offer) => offer.city.name === action.payload.city);

@@ -30,11 +30,7 @@ function RoomScreen(): JSX.Element {
   const currentStateOffer = useAppSelector((state) => state.currentOffer);
   const reviewList = useAppSelector((state) => state.reviewsList);
   const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoadingOffersData);
-
-  if (!currentStateOffer || isLoading) { // Временно добавлено, до решении проблемы
-    return <LoadingScreen />;
-  }
+  const isLoading = useAppSelector((state) => state.isLoadingRoomData);
 
   if (isLoading) {
     return <LoadingScreen />;

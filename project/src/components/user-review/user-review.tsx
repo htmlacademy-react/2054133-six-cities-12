@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../store';
-import { fetchCommentsAction, sendReviewAction } from '../../store/api-action';
+import { sendReviewAction } from '../../store/api-action';
 import { MIN_COMMENT_LENGTH, MIN_RATING } from '../../const';
 
 type userReviewProps = {
@@ -38,7 +38,6 @@ function UserReview({offerId}: userReviewProps) {
 
     dispatch(sendReviewAction(reviewData));
     clearForm();
-    dispatch(fetchCommentsAction(Number(offerId)));
   };
 
   return (

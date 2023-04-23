@@ -2,15 +2,18 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import { Offer } from '../types/offer';
-import { loadOfferAction,
+import {
+  loadOfferAction,
   loadFavoritesAction,
   loadOffersAction,
   requierAuthorizationStatus,
   setOffersDataLoadingStatus,
+  setRoomDataLoadingStatus,
   loadNearbyOffersAction,
   loadComments,
   addReview,
-  getUserData } from './action';
+  getUserData,
+} from './action';
 import { ApiRoute, AuthorizationStatus } from '../const';
 import AuthData from '../types/auth-data';
 import UserData from '../types/user-data';
@@ -46,8 +49,13 @@ const fetchFavoritesAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchFavorites',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
-    dispatch(loadFavoritesAction(data));
+    try {
+      const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
+      dispatch(loadFavoritesAction(data));
+    }
+    catch (error) {
+      toast.error('Whoops, failed to get data from the server');
+    }
   },
 );
 
@@ -58,7 +66,7 @@ const fetchOfferAction = createAsyncThunk<void, number, {
 }>(
   'data/fetchOffer',
   async (offerId, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
+    dispatch(setRoomDataLoadingStatus(true));
     try {
       const {data} = await api.get<Offer>(`/hotels/${offerId}`);
       dispatch(loadOfferAction(data));
@@ -67,7 +75,7 @@ const fetchOfferAction = createAsyncThunk<void, number, {
       toast.error('Whoops, failed to get data from the server');
     }
     finally {
-      dispatch(setOffersDataLoadingStatus(false));
+      dispatch(setRoomDataLoadingStatus(false));
     }
   },
 );
@@ -110,7 +118,7 @@ const sendReviewAction = createAsyncThunk<void, Review, {
   'data/sendReview',
   async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
     try {
-      const {data: review} = await api.post<UserComment>(`/comments/${hotelId}`, {comment, rating});
+      const {data: review} = await api.post<UserComment[]>(`/comments/${hotelId}`, {comment, rating});
       dispatch(addReview(review));
     }
     catch (error) { toast.error('Whoops, failed to post data to the server'); }
@@ -129,6 +137,7 @@ const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(requierAuthorizationStatus(AuthorizationStatus.Auth));
     }
     catch {
+      toast.error('Whoops, failed to check authorization status');
       dispatch(requierAuthorizationStatus(AuthorizationStatus.NoAuth));
     }
   },
@@ -141,9 +150,14 @@ const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(ApiRoute.Login, {email, password});
-    saveToken(token);
-    dispatch(requierAuthorizationStatus(AuthorizationStatus.Auth));
+    try {
+      const {data: {token}} = await api.post<UserData>(ApiRoute.Login, {email, password});
+      saveToken(token);
+      dispatch(requierAuthorizationStatus(AuthorizationStatus.Auth));
+    }
+    catch {
+      toast.error('Whoops, failed to get user data from the server');
+    }
   },
 );
 
@@ -154,8 +168,13 @@ const fetchUserDataAction = createAsyncThunk<void, undefined, {
 }>(
   'data/fetchUserData',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<UserData>(ApiRoute.Login);
-    dispatch(getUserData(data));
+    try {
+      const {data} = await api.get<UserData>(ApiRoute.Login);
+      dispatch(getUserData(data));
+    }
+    catch {
+      toast.error('Whoops, failed to get user data');
+    }
   }
 );
 
@@ -172,4 +191,15 @@ const logoutAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export { fetchOffersAction, fetchFavoritesAction, fetchOfferAction, fetchNearbyOffersAction, fetchCommentsAction, checkAuthAction, loginAction, logoutAction, sendReviewAction, fetchUserDataAction };
+export {
+  fetchOffersAction,
+  fetchFavoritesAction,
+  fetchOfferAction,
+  fetchNearbyOffersAction,
+  fetchCommentsAction,
+  checkAuthAction,
+  loginAction,
+  logoutAction,
+  sendReviewAction,
+  fetchUserDataAction
+};

@@ -12,7 +12,8 @@ const Action = {
   FILTER_OFFERS: 'FILTER_OFFERS',
   SORT_OFFERS: 'SORT_OFFERS',
   AUTORISATION_STATUS: 'AUTORISATION_STATUS',
-  LOADING_STATUS: 'LOADING_STATUS',
+  LOADING_OFFERS_STATUS: 'LOADING_OFFERS_STATUS',
+  LOADING_OFFER_STATUS: 'LOADING_OFFER_STATUS',
   NEARBY_OFFERS: 'NEARBY_OFFERS',
   LOAD_COMMENTS: 'LOAD_COMMENTS',
   ADD_COMMENT: 'ADD_COMMENT',
@@ -30,7 +31,7 @@ const loadNearbyOffersAction = createAction<Offer[]>(Action.NEARBY_OFFERS);
 
 const loadComments = createAction<UserComment[]>(Action.LOAD_COMMENTS);
 
-const addReview = createAction<UserComment>(Action.ADD_COMMENT);
+const addReview = createAction<UserComment[]>(Action.ADD_COMMENT);
 
 const changeCityAction = createAction(Action.CHANGE_CITY, (city: string) => ({payload: city}));
 
@@ -40,7 +41,9 @@ const sortingOffersAction = createAction(Action.SORT_OFFERS, (sortType: string, 
 
 const requierAuthorizationStatus = createAction<AuthorizationStatus>(Action.AUTORISATION_STATUS);
 
-const setOffersDataLoadingStatus = createAction<boolean>(Action.LOADING_STATUS);
+const setOffersDataLoadingStatus = createAction<boolean>(Action.LOADING_OFFERS_STATUS);
+
+const setRoomDataLoadingStatus = createAction<boolean>(Action.LOADING_OFFER_STATUS);
 
 const getUserData = createAction<UserData>(Action.GET_USER_DATA);
 
@@ -57,6 +60,7 @@ export {
   loadFavoritesAction,
   loadOfferAction,
   setOffersDataLoadingStatus,
+  setRoomDataLoadingStatus,
   loadComments,
   addReview,
   getUserData,
