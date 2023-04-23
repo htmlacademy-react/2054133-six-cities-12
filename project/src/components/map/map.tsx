@@ -53,7 +53,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
       markersGroup.current?.remove();
       markersGroup.current = new LayerGroup().addTo(map);
 
-      map.flyTo([
+      map.setView([
         currentCityData.location.latitude,
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
