@@ -1,5 +1,5 @@
 import { Offer } from '../../types/offer';
-import FavoriteCard from '../favorite-card/favorite-card';
+import FavoriteCityCard from '../favorite-city-card/favorite-city-card';
 import { useAppSelector } from '../../store';
 
 function FavoriteList() {
@@ -22,7 +22,7 @@ function FavoriteList() {
 
   return (
     <ul className="favorites__list">
-      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCard key={city} city={city} />)}
+      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCityCard key={city} city={city} />)}
     </ul>
   );
 }
