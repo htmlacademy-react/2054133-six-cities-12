@@ -10,7 +10,7 @@ import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
-import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, sendFavoritesAction } from '../../store/api-action';
+import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
 import UserReview from '../../components/user-review/user-review';
 import { AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -24,16 +24,19 @@ function RoomScreen(): JSX.Element {
 
   const buttonFavoriteRef = useRef<HTMLButtonElement | null>(null);
 
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const currentStateOffer = useAppSelector((state) => state.currentOffer);
+  const reviewList = useAppSelector((state) => state.reviewsList);
+  const isLoading = useAppSelector((state) => state.isLoadingRoomData);
+
   useEffect(() => {
     dispatch(fetchOfferAction(Number(params.id)));
     dispatch(fetchNearbyOffersAction(Number(params.id)));
     dispatch(fetchCommentsAction(Number(params.id)));
-  }, [params.id, dispatch]);
-
-  const currentStateOffer = useAppSelector((state) => state.currentOffer);
-  const reviewList = useAppSelector((state) => state.reviewsList);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoadingRoomData);
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchUserDataAction());
+    }
+  }, [params.id, authStatus, dispatch]);
 
   if (isLoading) {
     return <LoadingScreen />;

@@ -34,7 +34,6 @@ function FavoriteCard({offer}: FavoriteCardProps) {
 
   };
 
-
   return (
     <article className="favorites__card place-card" key={offer.id}>
       {offer.isPremium && <PremiumInfo className="place-card__mark"/>}

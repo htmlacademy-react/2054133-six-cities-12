@@ -60,12 +60,7 @@ const fetchFavoritesAction = createAsyncThunk<void, undefined, {
   },
 );
 
-type favor = {
-  id: number;
-  isFavorite: number;
-}
-
-const sendFavoritesAction = createAsyncThunk<void, favor, {
+const sendFavoritesAction = createAsyncThunk<void, {id: number; isFavorite: number}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
