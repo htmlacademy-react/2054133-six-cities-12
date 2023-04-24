@@ -40,7 +40,7 @@ function MainScreen(): JSX.Element {
       dispatch(fetchFavoritesAction());
       dispatch(fetchUserDataAction());
     }
-  }, []);
+  }, [authStatus, dispatch]);
 
   if (isLoading) {
     return <LoadingScreen />;

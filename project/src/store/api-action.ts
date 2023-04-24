@@ -160,8 +160,8 @@ const checkAuthAction = createAsyncThunk<void, undefined, {
       dispatch(requierAuthorizationStatus(AuthorizationStatus.Auth));
     }
     catch {
-      toast.error('Whoops, failed to check authorization status');
       dispatch(requierAuthorizationStatus(AuthorizationStatus.NoAuth));
+      toast.error('Whoops, failed to check authorization status');
     }
   },
 );

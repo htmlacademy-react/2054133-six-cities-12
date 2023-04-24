@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Navigate, useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
@@ -10,16 +10,19 @@ import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
-import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction } from '../../store/api-action';
+import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, sendFavoritesAction } from '../../store/api-action';
 import UserReview from '../../components/user-review/user-review';
 import { AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { changeCurrentOffer } from '../../store/action';
 
 function RoomScreen(): JSX.Element {
 
   const params = useParams();
 
   const dispatch = useAppDispatch();
+
+  const buttonFavoriteRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
     dispatch(fetchOfferAction(Number(params.id)));
@@ -45,6 +48,24 @@ function RoomScreen(): JSX.Element {
   const getFavoriteClassName = () => isFavorite ? 'property__bookmark-button property__bookmark-button--active button' : 'property__bookmark-button button';
   const getAdultsTitle = (adultsCount: number): string => adultsCount <= 1 ? `Max ${adultsCount} adult` : `Max ${adultsCount} adults`;
   const getBedroomsTitle = (bedroomsCount: number): string => bedroomsCount <= 1 ? `${bedroomsCount} bedroom` : `${bedroomsCount} bedrooms`;
+
+  const handleFavoriteClick = () => {
+
+    const data = {
+      id: Number(params.id),
+      isFavorite: 0
+    };
+
+    dispatch(changeCurrentOffer(!isFavorite));
+
+    if (buttonFavoriteRef.current?.classList.contains('property__bookmark-button--active')) {
+      dispatch(sendFavoritesAction(data));
+    }
+    else {
+      data.isFavorite = 1;
+      dispatch(sendFavoritesAction(data));
+    }
+  };
 
   return (
     <div className="page">
@@ -75,7 +96,7 @@ function RoomScreen(): JSX.Element {
                 <h1 className="property__name">
                   {title}
                 </h1>
-                <button className={getFavoriteClassName()} type="button">
+                <button className={getFavoriteClassName()} type="button" onClick={handleFavoriteClick} ref={buttonFavoriteRef}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>

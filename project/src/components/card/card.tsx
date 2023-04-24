@@ -24,27 +24,20 @@ function Card({offerData, cardClassName, handleCardOver}: CardProps): JSX.Elemen
   const offerRating = getRating(rating);
 
   const handleFavoriteClick = () => {
-    if (!buttonFavoriteRef.current) {
-      return;
-    }
 
-    if (buttonFavoriteRef.current.classList.contains('place-card__bookmark-button--active')) {
-      console.log('remove favorite offer');
-      const data = {
-        id: id,
-        isFavorite: 0
-      };
-      // buttonFavoriteRef.current.className = 'place-card__bookmark-button button';
-      return dispatch(sendFavoritesAction(data));
-    }
-
-    console.log('add favorite offer');
     const data = {
       id: id,
-      isFavorite: 1
+      isFavorite: 0
     };
-    // buttonFavoriteRef.current.className = 'place-card__bookmark-button place-card__bookmark-button--active button';
-    dispatch(sendFavoritesAction(data));
+
+    if (buttonFavoriteRef.current?.classList.contains('place-card__bookmark-button--active')) {
+      dispatch(sendFavoritesAction(data));
+    }
+    else {
+      data.isFavorite = 1;
+      dispatch(sendFavoritesAction(data));
+    }
+
   };
 
   return (

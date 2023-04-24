@@ -20,6 +20,7 @@ const Action = {
   ADD_COMMENT: 'ADD_COMMENT',
   USER_LOGIN: 'USER_LOGIN',
   GET_USER_DATA: 'GET_USER_DATA',
+  CHANGE_CURRENT_OFFER: 'CHANGE_CURRENT_OFFER',
 } as const;
 
 const loadOffersAction = createAction<Offer[]>(Action.LOAD_OFFERS);
@@ -52,7 +53,10 @@ const getUserData = createAction<UserData>(Action.GET_USER_DATA);
 
 const removeUserData = createAction<null>(Action.USER_LOGIN);
 
+const changeCurrentOffer = createAction<boolean>(Action.CHANGE_CURRENT_OFFER);
+
 export {
+  changeCurrentOffer,
   loadOffersAction,
   Action,
   loadNearbyOffersAction,

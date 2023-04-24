@@ -15,7 +15,8 @@ import { loadOfferAction,
   removeUserData,
   setRoomDataLoadingStatus,
   addReview,
-  addFavoritesAction
+  addFavoritesAction,
+  changeCurrentOffer,
 } from './action';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
@@ -61,12 +62,21 @@ const reducer = createReducer(initialState, (builder) => {
       state.favoriteOffersList = action.payload;
       state.favoriteOffersListCopy = action.payload;
     })
-    .addCase(addFavoritesAction, (state, action) => { //favorites
+    .addCase(addFavoritesAction, (state, action) => {
       const data = action.payload;
       const currentOffer = state.favoriteOffersListCopy.find((item) => item.id === data.id);
+      state.offersListCopy.forEach((offer) => {
+        if (offer.id === action.payload.id) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
+      state.offersList.forEach((offer) => {
+        if (offer.id === action.payload.id) {
+          offer.isFavorite = action.payload.isFavorite;
+        }
+      });
       if (currentOffer) {
         state.favoriteOffersListCopy = state.favoriteOffersListCopy.filter((offer) => offer.id !== currentOffer.id);
-        // state.offersListCopy
       }
       else {
         state.favoriteOffersListCopy = [...state.favoriteOffersListCopy, data];
@@ -80,6 +90,11 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOfferAction, (state, action) => {
       state.currentOffer = action.payload;
+    })
+    .addCase(changeCurrentOffer, (state, action) => {
+      if (state.currentOffer) {
+        state.currentOffer.isFavorite = action.payload;
+      }
     })
     .addCase(loadNearbyOffersAction, (state, action) => {
       state.nearbyOffersList = action.payload;
@@ -101,7 +116,7 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(sortingOffersAction, (state, action) => {
       if (action.payload.sortType === OPTIONS.POPULAR) {
-        state.offersListCopy = state.offersListCopy.filter((offer) => offer.city.name === action.payload.city);
+        state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload.city);
       }
       if (action.payload.sortType === OPTIONS.PRICE_TO_HIGH) {
         state.offersListCopy = state.offersListCopy.sort(SortToHigh);

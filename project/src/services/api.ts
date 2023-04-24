@@ -3,7 +3,6 @@ import { getToken } from './token';
 import {StatusCodes} from 'http-status-codes';
 import {toast} from 'react-toastify';
 import { URL } from '../const';
-import { ToastContent } from 'react-toastify';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -15,9 +14,9 @@ const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[resp
 
 const REQUEST_TIMEOUT = 5000;
 
-// const debounce = (callback: (...args: ToastContent[]) => void, timeoutDelay = 20) => {
+// const debounce = (callback: (...args: string[]) => void, timeoutDelay = 20) => {
 //   let timeoutId: NodeJS.Timeout;
-//   return (...rest: ToastContent[]) => {
+//   return (...rest: string[]) => {
 //     clearTimeout(timeoutId);
 //     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
 //   };
