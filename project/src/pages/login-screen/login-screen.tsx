@@ -6,6 +6,7 @@ import { Navigate, useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import AuthData from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 
 function LoginScreen(): JSX.Element {
 
@@ -15,7 +16,8 @@ function LoginScreen(): JSX.Element {
   const naviagate = useNavigate();
 
   const dispatch = useAppDispatch();
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
+
+  const authStatus = useAppSelector(getAuthorizationStatus);
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
@@ -71,7 +73,7 @@ function LoginScreen(): JSX.Element {
           <section className="locations locations--login locations--current">
             <div className="locations__item">
               <a className="locations__item-link" href="/">
-                <span>Amsterdam</span>
+                <span>Paris</span>
               </a>
             </div>
           </section>

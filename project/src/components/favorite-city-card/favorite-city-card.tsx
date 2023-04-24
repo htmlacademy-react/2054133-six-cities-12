@@ -1,4 +1,5 @@
 import { useAppSelector } from '../../store';
+import { getFavoriteOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 import FavoriteCard from '../favorite-card/favorite-card';
 
 type FavoriteCityCardProps = {
@@ -7,7 +8,7 @@ type FavoriteCityCardProps = {
 
 function FavoriteCityCard({city}: FavoriteCityCardProps) {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
+  const favoritesList = useAppSelector(getFavoriteOffersListCopy);
 
   return (
     <li className="favorites__locations-items">

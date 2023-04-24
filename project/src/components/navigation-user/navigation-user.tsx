@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../store';
 import { AppRoute } from '../../const';
+import { getFavoriteOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { getUserData } from '../../store/user-data/user-data-selectors';
 
 
 function NavigationUser(): JSX.Element {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
-  const userLogin = useAppSelector((state) => state.userLogin);
+  const favoritesList = useAppSelector(getFavoriteOffersListCopy);
+  const userLogin = useAppSelector(getUserData);
 
   const getFavoritesCount = favoritesList.reduce((acc, item) => {
     if (item.isFavorite) {

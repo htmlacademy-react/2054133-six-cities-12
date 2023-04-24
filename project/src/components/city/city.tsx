@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
-import { changeCityAction, filteringOffersAction } from '../../store/action';
+import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
 
 type CityProps = {
   cityName: string;

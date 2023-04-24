@@ -14,7 +14,10 @@ import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, fetchUs
 import UserReview from '../../components/user-review/user-review';
 import { AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { changeCurrentOffer } from '../../store/action';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
+import { getCurrentOffer, getIsLoadingRoomStatus } from '../../store/offers-data/offers-data-selectors';
+import { getCommentsData } from '../../store/review-data/review-data-selectors';
+import { changeCurrentOffer } from '../../store/offers-data/offers-data';
 
 function RoomScreen(): JSX.Element {
 
@@ -24,10 +27,10 @@ function RoomScreen(): JSX.Element {
 
   const buttonFavoriteRef = useRef<HTMLButtonElement | null>(null);
 
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const currentStateOffer = useAppSelector((state) => state.currentOffer);
-  const reviewList = useAppSelector((state) => state.reviewsList);
-  const isLoading = useAppSelector((state) => state.isLoadingRoomData);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const currentStateOffer = useAppSelector(getCurrentOffer);
+  const commentsList = useAppSelector(getCommentsData);
+  const isLoading = useAppSelector(getIsLoadingRoomStatus);
 
   useEffect(() => {
     dispatch(fetchOfferAction(Number(params.id)));
@@ -152,7 +155,7 @@ function RoomScreen(): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviewList.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsList.length}</span></h2>
                 <ReviewList />
                 {authStatus === AuthorizationStatus.Auth && <UserReview offerId={Number(params.id)}/>}
               </section>

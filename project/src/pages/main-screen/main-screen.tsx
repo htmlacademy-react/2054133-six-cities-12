@@ -7,17 +7,19 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import CitiesPlaces from '../../components/cities-places/cities-places';
 import NoCitiesPlaces from '../../components/no-cities-places/no-cities-places';
 import { useEffect, useState } from 'react';
-import { changeCityAction, filteringOffersAction } from '../../store/action';
 import { AuthorizationStatus, defaultCity } from '../../const';
 import { fetchFavoritesAction, fetchUserDataAction } from '../../store/api-action';
 import LoadingScreen from '../loading-screen/loading-screen';
+import { getCurrentCity, getIsLoadingOffersStatus, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
+import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
 
 function MainScreen(): JSX.Element {
 
-  const currentCity = useAppSelector((state) => state.currentCity);
-  const offersList = useAppSelector((state) => state.offersListCopy);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isLoading = useAppSelector((state) => state.isLoadingOffersData);
+  const currentCity = useAppSelector(getCurrentCity);
+  const offersList = useAppSelector(getOffersListCopy);
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const isLoading = useAppSelector(getIsLoadingOffersStatus);
 
   const isOffers = offersList.length >= 1;
 

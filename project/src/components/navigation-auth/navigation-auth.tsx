@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { logoutAction } from '../../store/api-action';
-import { removeUserData } from '../../store/action';
+import { removeUserData } from '../../store/user-data/user-data';
 
 function NavigationAuth() {
 

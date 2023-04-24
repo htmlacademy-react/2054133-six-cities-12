@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store';
 import Card from '../card/card';
+import { getNearbyOffersList, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 
 type CardListProps = {
   className: string;
@@ -10,8 +11,8 @@ type CardListProps = {
 
 function CardList({className, cardClassName, handleCardOver}: CardListProps) {
 
-  const offersList = useAppSelector((state) => state.offersListCopy);
-  const nearbyOffersList = useAppSelector((state) => state.nearbyOffersList);
+  const offersList = useAppSelector(getOffersListCopy);
+  const nearbyOffersList = useAppSelector(getNearbyOffersList);
 
   const param = useParams();
   const isMainScreen = () => !param.id;

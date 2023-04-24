@@ -1,5 +1,4 @@
 import { createAction } from '@reduxjs/toolkit';
-import { AuthorizationStatus } from '../const';
 import { Offer } from '../types/offer';
 import { UserComment } from '../types/user';
 import UserData from '../types/user-data';
@@ -43,8 +42,6 @@ const filteringOffersAction = createAction(Action.FILTER_OFFERS, (city: string) 
 
 const sortingOffersAction = createAction(Action.SORT_OFFERS, (sortType: string, city: string) => ({payload: {sortType, city}}));
 
-const requierAuthorizationStatus = createAction<AuthorizationStatus>(Action.AUTORISATION_STATUS);
-
 const setOffersDataLoadingStatus = createAction<boolean>(Action.LOADING_OFFERS_STATUS);
 
 const setRoomDataLoadingStatus = createAction<boolean>(Action.LOADING_OFFER_STATUS);
@@ -63,7 +60,6 @@ export {
   changeCityAction,
   filteringOffersAction,
   sortingOffersAction,
-  requierAuthorizationStatus,
   loadFavoritesAction,
   addFavoritesAction,
   loadOfferAction,

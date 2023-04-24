@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { OPTIONS } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { sortingOffersAction } from '../../store/action';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
+import { getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { sortingOffersAction } from '../../store/offers-data/offers-data';
 
 type CitiesPlacesProps = {
   handleCardOver?: (id: number) => void;
@@ -13,17 +14,17 @@ type CitiesPlacesProps = {
 function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const offersList = useAppSelector((state) => state.offersListCopy);
+  const offersList = useAppSelector(getOffersListCopy);
 
   const [optionsListClassName, setOptionsListClassName] = useState('');
   const handleClickSorting = () => optionsListClassName ? setOptionsListClassName('') : setOptionsListClassName('places__options--opened');
 
   const [optionClassName, setOptionClassName] = useState<string>('Popular');
-  const handleClickOption = (evt: React.MouseEvent<HTMLLIElement>) => {
+  const handleClickOption = (evt: MouseEvent<HTMLLIElement>) => {
     if (evt.target instanceof HTMLElement && evt.target.textContent !== null) {
       setOptionClassName(evt.target.textContent);
       setOptionsListClassName('');
-      dispatch(sortingOffersAction(evt.target.textContent, currentCity));
+      dispatch(sortingOffersAction({sortType: evt.target.textContent, city: currentCity}));
     }
   };
 

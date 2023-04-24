@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef } from 'react';
 import useMap from '../../hooks/useMap';
 import { useAppSelector } from '../../store';
 import { useParams } from 'react-router-dom';
+import { getNearbyOffersList, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 
 type MapProps = {
   className: string;
@@ -15,8 +16,8 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
   const param = useParams();
 
-  const offersList = useAppSelector((state) => state.offersListCopy);
-  const nearbyOffersList = useAppSelector((state) => state.nearbyOffersList);
+  const offersList = useAppSelector(getOffersListCopy);
+  const nearbyOffersList = useAppSelector(getNearbyOffersList);
 
   const currentCityData = offersList[0].city;
 

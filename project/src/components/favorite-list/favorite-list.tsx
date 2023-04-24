@@ -1,10 +1,11 @@
 import { Offer } from '../../types/offer';
 import FavoriteCityCard from '../favorite-city-card/favorite-city-card';
 import { useAppSelector } from '../../store';
+import { getFavoriteOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 
 function FavoriteList() {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersListCopy);
+  const favoritesList = useAppSelector(getFavoriteOffersListCopy);
 
   const getFavoriteCities = () => {
 
