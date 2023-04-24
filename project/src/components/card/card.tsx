@@ -1,11 +1,12 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { Link, useNavigate } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Offer } from '../../types/offer';
 import { getRating } from '../../utils';
 import PremiumInfo from '../premium-info/premium-info';
 import { useRef } from 'react';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { sendFavoritesAction } from '../../store/api-action';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 
 type CardProps = {
   offerData: Offer;
@@ -19,11 +20,16 @@ function Card({offerData, cardClassName, handleCardOver}: CardProps): JSX.Elemen
   const buttonFavoriteRef = useRef<HTMLButtonElement | null>(null);
 
   const dispatch = useAppDispatch();
+  const authStatus = useAppSelector(getAuthorizationStatus);
+  const redirect = useNavigate();
 
   const getFavoriteClassName = () => isFavorite ? 'place-card__bookmark-button place-card__bookmark-button--active button' : 'place-card__bookmark-button button';
   const offerRating = getRating(rating);
 
   const handleFavoriteClick = () => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      return redirect(AppRoute.Login);
+    }
 
     const data = {
       id: id,

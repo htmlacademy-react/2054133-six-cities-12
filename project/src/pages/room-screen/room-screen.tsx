@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import CardList from '../../components/card-list/card-list';
 import Logo from '../../components/logo/logo';
 import Map from '../../components/map/map';
@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
 import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
 import UserReview from '../../components/user-review/user-review';
-import { AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 import { getCurrentOffer, getIsLoadingRoomStatus } from '../../store/offers-data/offers-data-selectors';
@@ -24,6 +24,7 @@ function RoomScreen(): JSX.Element {
   const params = useParams();
 
   const dispatch = useAppDispatch();
+  const redirect = useNavigate();
 
   const buttonFavoriteRef = useRef<HTMLButtonElement | null>(null);
 
@@ -56,6 +57,9 @@ function RoomScreen(): JSX.Element {
   const getBedroomsTitle = (bedroomsCount: number): string => bedroomsCount <= 1 ? `${bedroomsCount} bedroom` : `${bedroomsCount} bedrooms`;
 
   const handleFavoriteClick = () => {
+    if (authStatus !== AuthorizationStatus.Auth) {
+      return redirect(AppRoute.Login);
+    }
 
     const data = {
       id: Number(params.id),
