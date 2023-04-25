@@ -10,7 +10,7 @@ import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
-import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
+import { fetchCommentsAction, fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
 import UserReview from '../../components/user-review/user-review';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -38,6 +38,7 @@ function RoomScreen(): JSX.Element {
     dispatch(fetchNearbyOffersAction(Number(params.id)));
     dispatch(fetchCommentsAction(Number(params.id)));
     if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
       dispatch(fetchUserDataAction());
     }
   }, [params.id, authStatus, dispatch]);

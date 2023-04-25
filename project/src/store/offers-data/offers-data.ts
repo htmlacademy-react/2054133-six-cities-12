@@ -99,6 +99,11 @@ export const offersData = createSlice({
             offer.isFavorite = action.payload.isFavorite;
           }
         });
+        state.nearbyOffersList.forEach((offer) => {
+          if (offer.id === action.payload.id) {
+            offer.isFavorite = action.payload.isFavorite;
+          }
+        });
         if (currentOffer) {
           state.favoriteOffersListCopy = state.favoriteOffersListCopy.filter((offer) => offer.id !== currentOffer.id);
         }
