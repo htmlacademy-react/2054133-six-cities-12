@@ -2,7 +2,7 @@ import { AuthorizationStatus } from '../const';
 import { store } from '../store';
 import { Offer } from './offer';
 import { UserComment } from './user';
-import UserData from './login-data';
+import LoginData from './login-data';
 
 type State = ReturnType<typeof store.getState>;
 
@@ -30,7 +30,7 @@ type TUserProcess = {
 };
 
 type TUserData = {
-  userLogin: UserData | null;
+  userLogin: LoginData | null;
 }
 
 export type { State, AppDispatch, TOffersData, TReviewData, TUserProcess, TUserData };
