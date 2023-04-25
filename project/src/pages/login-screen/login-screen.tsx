@@ -2,11 +2,14 @@ import { Helmet } from 'react-helmet-async';
 import Logo from '../../components/logo/logo';
 import { FormEvent, useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-action';
 import AuthData from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
+import { getRandomArrayElement } from '../../utils';
+import { CITIES } from '../../const';
+import { changeCityAction } from '../../store/offers-data/offers-data';
 
 function LoginScreen(): JSX.Element {
 
@@ -31,7 +34,9 @@ function LoginScreen(): JSX.Element {
         password: passwordRef.current.value,
       });
     }
-    naviagate(-1);
+    if (authStatus === AuthorizationStatus.Auth) {
+      naviagate(-1);
+    }
   };
 
   if (authStatus === AuthorizationStatus.Auth) {
@@ -39,6 +44,8 @@ function LoginScreen(): JSX.Element {
       <Navigate to={AppRoute.Main} />
     );
   }
+
+  const cityButton = getRandomArrayElement(CITIES);
 
   return (
     <div className="page page--gray page--login">
@@ -72,9 +79,12 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <a className="locations__item-link" href="/">
-                <span>Paris</span>
-              </a>
+              <Link className="locations__item-link" to={AppRoute.Main}>
+                <span
+                  onClick={() => dispatch(changeCityAction(cityButton))}
+                >{cityButton}
+                </span>
+              </Link>
             </div>
           </section>
         </div>

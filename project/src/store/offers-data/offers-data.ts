@@ -1,22 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { defaultCity, NameSpace, OPTIONS } from '../../const';
 import { fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferAction, fetchOffersAction, sendFavoritesAction } from '../api-action';
-import { Offer } from '../../types/offer';
 import { SortToHigh, SortToLow, SortTopRating } from '../../utils';
+import { TOffersData } from '../../types/state';
 
-type TInitialState = {
-  offersList: Offer[];
-  offersListCopy: Offer[];
-  favoriteOffersList: Offer[];
-  favoriteOffersListCopy: Offer[];
-  isLoadingOffersData: boolean;
-  currentOffer: Offer | null;
-  isLoadingRoomData: boolean;
-  nearbyOffersList: Offer[];
-  currentCity: string;
-}
-
-const initialState: TInitialState = {
+const initialState: TOffersData = {
   offersList: [],
   offersListCopy : [],
   favoriteOffersList: [],
@@ -72,6 +60,9 @@ export const offersData = createSlice({
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === state.currentCity);
         state.isLoadingOffersData = false;
       })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isLoadingOffersData = false;
+      })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favoriteOffersList = action.payload;
         state.favoriteOffersListCopy = action.payload;
@@ -81,6 +72,9 @@ export const offersData = createSlice({
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.currentOffer = action.payload;
+        state.isLoadingRoomData = false;
+      })
+      .addCase(fetchOfferAction.rejected, (state) => {
         state.isLoadingRoomData = false;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {

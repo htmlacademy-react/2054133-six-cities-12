@@ -4,7 +4,7 @@ import {AppDispatch, State} from '../types/state';
 import { Offer } from '../types/offer';
 import { ApiRoute } from '../const';
 import AuthData from '../types/auth-data';
-import UserData from '../types/user-data';
+import LoginData from '../types/login-data';
 import { dropToken, saveToken } from '../services/token';
 import { Review, UserComment } from '../types/user';
 // import { toast } from 'react-toastify';
@@ -169,7 +169,7 @@ const loginAction = createAsyncThunk<void, AuthData, {
 }>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data: {token}} = await api.post<UserData>(ApiRoute.Login, {email, password});
+    const {data: {token}} = await api.post<LoginData>(ApiRoute.Login, {email, password});
     saveToken(token);
   }
 );
@@ -186,14 +186,14 @@ const logoutAction = createAsyncThunk<void, undefined, {
   }
 );
 
-const fetchUserDataAction = createAsyncThunk<UserData, undefined, {
+const fetchUserDataAction = createAsyncThunk<LoginData, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchUserData',
   async (_arg, {extra: api}) => {
-    const {data} = await api.get<UserData>(ApiRoute.Login);
+    const {data} = await api.get<LoginData>(ApiRoute.Login);
 
     return data;
 

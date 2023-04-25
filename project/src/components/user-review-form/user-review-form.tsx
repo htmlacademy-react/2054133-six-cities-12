@@ -1,24 +1,34 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { sendReviewAction } from '../../store/api-action';
-import { MIN_COMMENT_LENGTH, MIN_RATING } from '../../const';
+import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, MIN_RATING } from '../../const';
+import { getReviewSendingStatus } from '../../store/review-data/review-data-selectors';
 
-type userReviewProps = {
+type userReviewFormProps = {
   offerId: number;
 }
 
-function UserReview({offerId}: userReviewProps) {
+function UserReviewForm({offerId}: userReviewFormProps) {
 
   const [userComment, setUserComment] = useState({comment: '', rating: 0,});
 
   const dispatch = useAppDispatch();
 
+  const isReviewSending = useAppSelector(getReviewSendingStatus);
+
   const cleanForm = () => {
     setUserComment({comment: '', rating: 0,});
   };
 
+  const isTextAreaDisabled = isReviewSending;
+
   const isButtonDisabled = () => {
-    if (userComment.rating < MIN_RATING || userComment.comment.length <= MIN_COMMENT_LENGTH) {
+    if (
+      userComment.rating < MIN_RATING
+      || userComment.comment.length <= MIN_COMMENT_LENGTH
+      || userComment.comment.length > MAX_COMMENT_LENGTH
+      || isReviewSending
+    ) {
       return true;
     }
   };
@@ -89,6 +99,7 @@ function UserReview({offerId}: userReviewProps) {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={userComment.comment}
         onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => setUserComment({...userComment, comment: target.value})}
+        disabled={isTextAreaDisabled}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -101,4 +112,4 @@ function UserReview({offerId}: userReviewProps) {
   );
 }
 
-export default UserReview;
+export default UserReviewForm;

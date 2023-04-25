@@ -1,12 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, AuthorizationStatus } from '../../const';
 import { checkAuthAction, loginAction, logoutAction } from '../api-action';
+import { TUserProcess } from '../../types/state';
+import { toast } from 'react-toastify';
 
-type TinitialState = {
-  authorizationStatus: AuthorizationStatus;
-};
-
-const initialState: TinitialState = {
+const initialState: TUserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown
 };
 
@@ -24,6 +22,9 @@ export const userProcess = createSlice({
       })
       .addCase(loginAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
+      })
+      .addCase(loginAction.rejected, () => {
+        toast.error('Whoops, authorization error, please try again');
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;

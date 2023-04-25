@@ -1,13 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../const';
 import { fetchUserDataAction } from '../api-action';
-import UserData from '../../types/user-data';
+import { TUserData } from '../../types/state';
 
-type TinitialState = {
-  userLogin: UserData | null;
-}
-
-const initialState: TinitialState = {
+const initialState: TUserData = {
   userLogin: null,
 };
 

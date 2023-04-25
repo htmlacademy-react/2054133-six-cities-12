@@ -44,4 +44,6 @@ const SortDate = (a: UserComment, b: UserComment) => {
   return 0;
 };
 
-export { getRating, SortToHigh, SortToLow, SortTopRating, SortDate };
+const getRandomArrayElement = (arr: string[]): string => arr[Math.floor(Math.random() * arr.length)];
+
+export { getRating, SortToHigh, SortToLow, SortTopRating, SortDate, getRandomArrayElement };

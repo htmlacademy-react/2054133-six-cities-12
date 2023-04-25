@@ -14,16 +14,6 @@ const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[resp
 
 const REQUEST_TIMEOUT = 5000;
 
-// const debounce = (callback: (...args: string[]) => void, timeoutDelay = 20) => {
-//   let timeoutId: NodeJS.Timeout;
-//   return (...rest: string[]) => {
-//     clearTimeout(timeoutId);
-//     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
-//   };
-// };
-
-// const handlerError = debounce(toast.info);
-
 const createApi = (): AxiosInstance => {
   const api = axios.create({
     baseURL: URL,
