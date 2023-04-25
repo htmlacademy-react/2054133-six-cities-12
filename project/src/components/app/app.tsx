@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute } from '../../const';
 import FavoritesScreen from '../../pages/favorites-screen/favorites-screen';
 import LoginScreen from '../../pages/login-screen/login-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -9,6 +9,7 @@ import RoomScreen from '../../pages/room-screen/room-screen';
 import PrivateRoute from '../private-route/private-route';
 
 function App(): JSX.Element {
+
   return (
     <BrowserRouter>
       <HelmetProvider>
@@ -16,9 +17,9 @@ function App(): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <PrivateRoute >
                 <FavoritesScreen />
-              </PrivateRoute>
+              </PrivateRoute >
             }
           />
           <Route

@@ -1,13 +1,15 @@
 import { useAppSelector } from '../../store';
+import { getCommentsData } from '../../store/review-data/review-data-selectors';
+import { SortDate } from '../../utils';
 import Review from '../review/review.';
 
 function ReviewList(): JSX.Element {
 
-  const reviewList = useAppSelector((state) => state.reviewsList);
+  const commentsList = useAppSelector(getCommentsData);
 
   return (
     <ul className="reviews__list">
-      {reviewList.slice(-10).map((review) => <Review key={review.id} review={review}/>)}
+      {commentsList.slice(-10).sort(SortDate).map((review) => <Review key={review.id} review={review}/>)}
     </ul>
   );
 }

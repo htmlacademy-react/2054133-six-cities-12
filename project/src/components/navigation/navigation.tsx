@@ -1,34 +1,19 @@
-import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../store';
+import NavigationUser from '../navigation-user/navigation-user';
+import NavigationAuth from '../navigation-auth/navigation-auth';
+import NavigationNoAuth from '../navigation-no-auth/navigation-no-auth';
+import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 
 function Navigation(): JSX.Element {
 
-  const offersList = useAppSelector((state) => state.favoriteOffersList);
-
-  const getFavoritesCount = offersList.reduce((acc, item) => {
-    if (item.isFavorite) {
-      acc += 1;
-    }
-    return acc;
-  },0);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <nav className="header__nav">
       <ul className="header__nav-list">
-        <li className="header__nav-item user">
-          <Link className="header__nav-link header__nav-link--profile" to="/">
-            <div className="header__avatar-wrapper user__avatar-wrapper">
-            </div>
-            <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-            <span className="header__favorite-count">{getFavoritesCount}</span>
-          </Link>
-        </li>
-        <li className="header__nav-item">
-          <Link className="header__nav-link" to={AppRoute.Login}>
-            <span className="header__signout">Sign in</span>
-          </Link>
-        </li>
+        {authorizationStatus === AuthorizationStatus.Auth && <NavigationUser />}
+        {authorizationStatus === AuthorizationStatus.Auth ? <NavigationAuth /> : <NavigationNoAuth />}
       </ul>
     </nav>
   );

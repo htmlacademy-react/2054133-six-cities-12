@@ -1,10 +1,11 @@
 import { Offer } from '../../types/offer';
-import FavoriteCard from '../favorite-card/favorite-card';
+import FavoriteCityCard from '../favorite-city-card/favorite-city-card';
 import { useAppSelector } from '../../store';
+import { getFavoriteOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 
 function FavoriteList() {
 
-  const favoritesList = useAppSelector((state) => state.favoriteOffersList);
+  const favoritesList = useAppSelector(getFavoriteOffersListCopy);
 
   const getFavoriteCities = () => {
 
@@ -22,7 +23,7 @@ function FavoriteList() {
 
   return (
     <ul className="favorites__list">
-      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCard key="" city={city} />)}
+      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCityCard key={city} city={city} />)}
     </ul>
   );
 }
