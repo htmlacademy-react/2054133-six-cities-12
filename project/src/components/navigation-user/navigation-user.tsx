@@ -10,12 +10,7 @@ function NavigationUser(): JSX.Element {
   const favoritesList = useAppSelector(getFavoriteOffersListCopy);
   const userLogin = useAppSelector(getUserData);
 
-  const getFavoritesCount = favoritesList.reduce((acc, item) => {
-    if (item.isFavorite) {
-      acc += 1;
-    }
-    return acc;
-  },0);
+  const favoritesCount = favoritesList.filter((offer) => offer.isFavorite).length;
 
   return (
     <li className="header__nav-item user">
@@ -24,7 +19,7 @@ function NavigationUser(): JSX.Element {
           {userLogin?.avatarUrl && <img src={userLogin?.avatarUrl} alt="avatar"></img>}
         </div>
         <span className="header__user-name user__name">{userLogin?.email}</span>
-        <span className="header__favorite-count">{getFavoritesCount}</span>
+        <span className="header__favorite-count">{favoritesCount}</span>
       </Link>
     </li>
   );

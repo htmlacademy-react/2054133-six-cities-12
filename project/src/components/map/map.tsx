@@ -38,7 +38,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
   const markersGroup = useRef<LayerGroup>();
 
-  const mapOffers = useMemo(() => {
+  const offers = useMemo(() => {
     if (param.id) {
       const currentOffer = offersList.find((offer) => offer.id === Number(param.id));
       if (currentOffer) {
@@ -59,7 +59,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
         currentCityData.location.longitude
       ], currentCityData.location.zoom);
 
-      mapOffers.forEach((offer) => {
+      offers.forEach((offer) => {
         leaflet
           .marker({
             lat: offer.location.latitude,
@@ -72,7 +72,7 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
           .addTo(markersGroup.current as LayerGroup);
       });
     }
-  }, [map, mapOffers, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId, param.id]);
+  }, [map, offers, defaultCustomIcon, currentCityData, currentCustomIcon, currentOfferId, param.id]);
 
   return (
     <section className={className} style={{height: height}} ref={mapRef}></section>

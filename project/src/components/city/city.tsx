@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
-// import { fetchOffersAction } from '../../store/api-action';
 
 type CityProps = {
   cityName: string;
@@ -17,7 +16,6 @@ function City({cityName, currentCity}: CityProps): JSX.Element {
   const handleCityChange = (newCity: string) => {
     dispatch(changeCityAction(newCity));
     dispatch(filteringOffersAction(newCity));
-    // dispatch(fetchOffersAction()); // временное решение для переключения между городами
   };
 
   return (
