@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { defaultCity, NameSpace, OPTIONS } from '../../const';
+import { defaultCity, NameSpace, Options } from '../../const';
 import { fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferAction, fetchOffersAction, sendFavoritesAction } from '../api-action';
 import { SortToHigh, SortToLow, SortTopRating } from '../../utils';
 import { TOffersData } from '../../types/state';
@@ -33,16 +33,16 @@ export const offersData = createSlice({
       state.favoriteOffersListCopy = [];
     },
     sortingOffersAction: (state, action: PayloadAction<{sortType: string; city: string}>) => {
-      if (action.payload.sortType === OPTIONS.POPULAR) {
+      if (action.payload.sortType === Options.POPULAR) {
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload.city);
       }
-      if (action.payload.sortType === OPTIONS.PRICE_TO_HIGH) {
+      if (action.payload.sortType === Options.PRICE_TO_HIGH) {
         state.offersListCopy = state.offersListCopy.sort(SortToHigh);
       }
-      if (action.payload.sortType === OPTIONS.PRICE_TO_LOW) {
+      if (action.payload.sortType === Options.PRICE_TO_LOW) {
         state.offersListCopy = state.offersListCopy.sort(SortToLow);
       }
-      if (action.payload.sortType === OPTIONS.TOP_RATED) {
+      if (action.payload.sortType === Options.TOP_RATED) {
         state.offersListCopy = state.offersListCopy.sort(SortTopRating);
       }
     },

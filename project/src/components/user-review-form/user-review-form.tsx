@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { sendReviewAction } from '../../store/api-action';
-import { MAX_COMMENT_LENGTH, MIN_COMMENT_LENGTH, MIN_RATING } from '../../const';
+import { CommentLength, MIN_RATING } from '../../const';
 import { getReviewSendingStatus } from '../../store/review-data/review-data-selectors';
 
 type userReviewFormProps = {
@@ -25,8 +25,8 @@ function UserReviewForm({offerId}: userReviewFormProps) {
   const isButtonDisabled = () => {
     if (
       userComment.rating < MIN_RATING
-      || userComment.comment.length <= MIN_COMMENT_LENGTH
-      || userComment.comment.length > MAX_COMMENT_LENGTH
+      || userComment.comment.length <= CommentLength.Min
+      || userComment.comment.length > CommentLength.Max
       || isReviewSending
     ) {
       return true;
