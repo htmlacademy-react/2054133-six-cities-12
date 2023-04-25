@@ -32,7 +32,7 @@ function Card({offerData, cardClassName, handleCardOver}: CardProps): JSX.Elemen
     }
 
     const data = {
-      id: id,
+      id,
       isFavorite: 0
     };
 

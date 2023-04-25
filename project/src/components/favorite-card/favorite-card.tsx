@@ -62,7 +62,7 @@ function FavoriteCard({offer}: FavoriteCardProps) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{offer.title}</a>
+          <Link to={`${AppRoute.Property}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>

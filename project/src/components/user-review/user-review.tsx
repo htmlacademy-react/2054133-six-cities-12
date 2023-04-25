@@ -17,7 +17,7 @@ function UserReview({offerId}: userReviewProps) {
     setUserComment({comment: '', rating: 0,});
   };
 
-  const buttonState = () => {
+  const isButtonDisabled = () => {
     if (userComment.rating < MIN_RATING || userComment.comment.length <= MIN_COMMENT_LENGTH) {
       return true;
     }
@@ -26,7 +26,7 @@ function UserReview({offerId}: userReviewProps) {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (buttonState()) {
+    if (isButtonDisabled()) {
       return;
     }
 
@@ -95,7 +95,7 @@ function UserReview({offerId}: userReviewProps) {
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled={buttonState()}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={isButtonDisabled()}>Submit</button>
       </div>
     </form>
   );
