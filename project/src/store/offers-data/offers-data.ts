@@ -40,6 +40,10 @@ export const offersData = createSlice({
         state.currentOffer.isFavorite = action.payload;
       }
     },
+    removeFavoriteOffers: (state) => {
+      state.favoriteOffersList = [];
+      state.favoriteOffersListCopy = [];
+    },
     sortingOffersAction: (state, action: PayloadAction<{sortType: string; city: string}>) => {
       if (action.payload.sortType === OPTIONS.POPULAR) {
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload.city);
@@ -105,4 +109,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { changeCityAction, changeCurrentOffer, sortingOffersAction, filteringOffersAction } = offersData.actions;
+export const { changeCityAction, changeCurrentOffer, removeFavoriteOffers, sortingOffersAction, filteringOffersAction } = offersData.actions;
