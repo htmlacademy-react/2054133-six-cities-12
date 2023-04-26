@@ -39,7 +39,7 @@ enum NameSpace {
 
 const URL = 'https://12.react.pages.academy/six-cities';
 
-const MIN_RATING = 1;
+const MIN_RATING = '1';
 
 const CommentLength = {
   Min: 50,

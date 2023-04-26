@@ -2,17 +2,14 @@ import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
 import { Helmet } from 'react-helmet-async';
 import CitiesList from '../../components/cities-list/cities-list';
-import Map from '../../components/map/map';
 import { useAppDispatch, useAppSelector } from '../../store';
-import CitiesPlaces from '../../components/cities-places/cities-places';
-import NoCitiesPlaces from '../../components/no-cities-places/no-cities-places';
-import { useEffect, useState } from 'react';
-import { AuthorizationStatus, defaultCity } from '../../const';
+import { useEffect } from 'react';
+import { AuthorizationStatus } from '../../const';
 import { fetchFavoritesAction, fetchUserDataAction } from '../../store/api-action';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getIsLoadingOffersStatus, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
-import { filteringOffersAction } from '../../store/offers-data/offers-data';
+import CitiesBoard from '../../components/cities-board/cities-board';
 
 function MainScreen(): JSX.Element {
 
@@ -24,18 +21,9 @@ function MainScreen(): JSX.Element {
 
   const getPageEmptyClassName = !isOffers ? ' page__main--index-empty' : '';
 
-  const [currentOfferId, setCurrentOfferId] = useState<number>();
-  const handleCardOver = (offerId: number) => {
-    if (offerId > 0) {
-      return setCurrentOfferId(offerId);
-    }
-    setCurrentOfferId(-1);
-  };
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(filteringOffersAction(defaultCity));
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
       dispatch(fetchUserDataAction());
@@ -68,15 +56,7 @@ function MainScreen(): JSX.Element {
             <CitiesList />
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            {(isOffers && !isLoading) && <CitiesPlaces handleCardOver={handleCardOver} />}
-            {(!isOffers && !isLoading) && <NoCitiesPlaces />}
-            <div className="cities__right-section">
-              {isOffers && <Map className={'cities__map map'} height={'auto'} currentOfferId={currentOfferId}/>}
-            </div>
-          </div>
-        </div>
+        {<CitiesBoard />}
       </main>
     </div>
   );

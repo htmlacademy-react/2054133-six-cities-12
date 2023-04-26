@@ -3,21 +3,30 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import { sendReviewAction } from '../../store/api-action';
 import { CommentLength, MIN_RATING } from '../../const';
 import { getReviewSendingStatus } from '../../store/review-data/review-data-selectors';
+import RatingStars from '../rating-stars/rating-stars';
 
 type userReviewFormProps = {
   offerId: number;
 }
 
+export const ratingStarSetting: {[key: string]: string} = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+} as const;
+
 function UserReviewForm({offerId}: userReviewFormProps) {
 
-  const [userComment, setUserComment] = useState({comment: '', rating: 0,});
+  const [userComment, setUserComment] = useState({review: '', rating: '0',});
 
   const dispatch = useAppDispatch();
 
   const isReviewSending = useAppSelector(getReviewSendingStatus);
 
   const cleanForm = () => {
-    setUserComment({comment: '', rating: 0,});
+    setUserComment({review: '', rating: '0',});
   };
 
   const isTextAreaDisabled = isReviewSending;
@@ -25,8 +34,8 @@ function UserReviewForm({offerId}: userReviewFormProps) {
   const isButtonDisabled = () => {
     if (
       userComment.rating < MIN_RATING
-      || userComment.comment.length <= CommentLength.Min
-      || userComment.comment.length > CommentLength.Max
+      || userComment.review.length <= CommentLength.Min
+      || userComment.review.length > CommentLength.Max
       || isReviewSending
     ) {
       return true;
@@ -42,12 +51,21 @@ function UserReviewForm({offerId}: userReviewFormProps) {
 
     const reviewData = {
       hotelId: offerId,
-      comment: userComment.comment,
-      rating: userComment.rating,
+      comment: userComment.review,
+      rating: Number(userComment.rating),
     };
 
     dispatch(sendReviewAction(reviewData));
     cleanForm();
+  };
+
+  const handleChangeForm = ({target}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const {name, value} = target;
+
+    setUserComment((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
   };
 
   return (
@@ -55,50 +73,23 @@ function UserReviewForm({offerId}: userReviewFormProps) {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div
         className="reviews__rating-form form__rating"
-        onChange={({target}: ChangeEvent<HTMLInputElement>) => setUserComment({...userComment, [target.name]: target.value})}
       >
-        <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"/>
-        <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"/>
-        <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"/>
-        <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"/>
-        <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
-
-        <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"/>
-        <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-          <svg className="form__star-image" width="37" height="33">
-            <use xlinkHref="#icon-star"></use>
-          </svg>
-        </label>
+        {Object.keys(ratingStarSetting).reverse().map((number) => (
+          <RatingStars
+            number={number}
+            key={number}
+            title={ratingStarSetting[number]}
+            value={userComment.rating}
+            onChange={handleChangeForm}
+          />))}
       </div>
       <textarea
         className="reviews__textarea form__textarea"
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={userComment.comment}
-        onChange={({target}: ChangeEvent<HTMLTextAreaElement>) => setUserComment({...userComment, comment: target.value})}
+        value={userComment.review}
+        onChange={handleChangeForm}
         disabled={isTextAreaDisabled}
       >
       </textarea>
