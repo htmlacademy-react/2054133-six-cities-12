@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store';
 import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
+import { getCurrentCity } from '../../store/offers-data/offers-data-selectors';
 
 type CityProps = {
   cityName: string;
-  currentCity: string;
 }
 
-function City({cityName, currentCity}: CityProps): JSX.Element {
+function City({cityName}: CityProps): JSX.Element {
+
+  const currentCity = useAppSelector(getCurrentCity);
 
   const getCurrentCityClassName = () => currentCity === cityName ? 'tabs__item--active' : '';
 

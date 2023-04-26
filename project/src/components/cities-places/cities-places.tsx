@@ -3,17 +3,18 @@ import { Options } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
-import { getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { getCurrentCity, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 import { sortingOffersAction } from '../../store/offers-data/offers-data';
 
 type CitiesPlacesProps = {
   handleCardOver?: (id: number) => void;
-  currentCity: string;
 }
 
-function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Element {
+function CitiesPlaces({handleCardOver}: CitiesPlacesProps): JSX.Element {
+
   const dispatch = useAppDispatch();
 
+  const currentCity = useAppSelector(getCurrentCity);
   const offersList = useAppSelector(getOffersListCopy);
 
   const [optionsListClassName, setOptionsListClassName] = useState('');
