@@ -7,7 +7,6 @@ import AuthData from '../types/auth-data';
 import LoginData from '../types/login-data';
 import { dropToken, saveToken } from '../services/token';
 import { Review, UserComment } from '../types/user';
-// import { toast } from 'react-toastify';
 
 const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
@@ -19,17 +18,6 @@ const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
     const {data} = await api.get<Offer[]>(ApiRoute.Offers);
 
     return data;
-    // dispatch(setOffersDataLoadingStatus(true));
-    // try {
-    //   const {data} = await api.get<Offer[]>(ApiRoute.Offers);
-    //   dispatch(loadOffersAction(data));
-    // }
-    // catch (error) {
-    //   toast.error('Whoops, failed to get data from the server');
-    // }
-    // finally {
-    //   dispatch(setOffersDataLoadingStatus(false));
-    // }
   },
 );
 
@@ -43,13 +31,6 @@ const fetchFavoritesAction = createAsyncThunk<Offer[], undefined, {
     const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
 
     return data;
-    // try {
-    //   const {data} = await api.get<Offer[]>(ApiRoute.Favorite);
-    //   dispatch(loadFavoritesAction(data));
-    // }
-    // catch (error) {
-    //   toast.error('Whoops, failed to get data from the server');
-    // }
   },
 );
 
@@ -63,13 +44,6 @@ const sendFavoritesAction = createAsyncThunk<Offer, {id: number; isFavorite: num
     const {data} = await api.post<Offer>(`favorite/${id}/${isFavorite}`);
 
     return data;
-    // try {
-    //   const {data} = await api.post<Offer>(`favorite/${id}/${isFavorite}`);
-    //   dispatch(addFavoritesAction(data));
-    // }
-    // catch (error) {
-    //   toast.error('Whoops, failed to post data to the server');
-    // }
   },
 );
 
@@ -83,17 +57,6 @@ const fetchOfferAction = createAsyncThunk<Offer, number, {
     const {data} = await api.get<Offer>(`/hotels/${offerId}`);
 
     return data;
-    // dispatch(setRoomDataLoadingStatus(true));
-    // try {
-    //   const {data} = await api.get<Offer>(`/hotels/${offerId}`);
-    //   dispatch(loadOfferAction(data));
-    // }
-    // catch (error) {
-    //   toast.error('Whoops, failed to get data from the server');
-    // }
-    // finally {
-    //   dispatch(setRoomDataLoadingStatus(false));
-    // }
   },
 );
 
@@ -107,11 +70,6 @@ const fetchNearbyOffersAction = createAsyncThunk<Offer[], number, {
     const {data} = await api.get<Offer[]>(`/hotels/${offerId}/nearby`);
 
     return data;
-    // try {
-    //   const {data} = await api.get<Offer[]>(`/hotels/${offerId}/nearby`);
-    //   dispatch(loadNearbyOffersAction(data));
-    // }
-    // catch (error) { toast.error('Whoops, failed to get data from the server'); }
   },
 );
 
@@ -125,11 +83,6 @@ const fetchCommentsAction = createAsyncThunk<UserComment[], number, {
     const {data} = await api.get<UserComment[]>(`/comments/${offerId}`);
 
     return data;
-    // try {
-    //   const {data} = await api.get<UserComment[]>(`/comments/${offerId}`);
-    //   dispatch(loadComments(data));
-    // }
-    // catch (error) { toast.error('Whoops, failed to get data from the server'); }
   },
 );
 
@@ -143,11 +96,6 @@ const sendReviewAction = createAsyncThunk<UserComment[], Review, {
     const {data: review} = await api.post<UserComment[]>(`/comments/${hotelId}`, {comment, rating});
 
     return review;
-    // try {
-    //   const {data: review} = await api.post<UserComment[]>(`/comments/${hotelId}`, {comment, rating});
-    //   dispatch(addReview(review));
-    // }
-    // catch (error) { toast.error('Whoops, failed to post data to the server'); }
   },
 );
 
@@ -157,7 +105,7 @@ const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {extra: api}) => {
     await api.get(ApiRoute.Login);
   },
 );
@@ -196,14 +144,6 @@ const fetchUserDataAction = createAsyncThunk<LoginData, undefined, {
     const {data} = await api.get<LoginData>(ApiRoute.Login);
 
     return data;
-
-    // try {
-    //   const {data} = await api.get<UserData>(ApiRoute.Login);
-    //   dispatch(getUserData(data));
-    // }
-    // catch {
-    //   toast.error('Whoops, failed to get user data');
-    // }
   }
 );
 

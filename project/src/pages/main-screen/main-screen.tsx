@@ -35,7 +35,7 @@ function MainScreen(): JSX.Element {
   }
 
   return (
-    <div className={`page page--gray page--main${getPageEmptyClassName}`}>
+    <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
@@ -49,7 +49,7 @@ function MainScreen(): JSX.Element {
         <title>6 cities</title>
       </Helmet>
 
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${getPageEmptyClassName}`}>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <section className="locations container">

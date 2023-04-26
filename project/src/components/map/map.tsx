@@ -5,6 +5,7 @@ import useMap from '../../hooks/useMap';
 import { useAppSelector } from '../../store';
 import { useParams } from 'react-router-dom';
 import { getNearbyOffersList, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { iconAnchor, iconSize } from '../../const';
 
 type MapProps = {
   className: string;
@@ -26,14 +27,14 @@ function Map({className, height, currentOfferId}: MapProps): JSX.Element {
 
   const defaultCustomIcon = leaflet.icon({
     iconUrl: 'img/pin.svg',
-    iconSize: [28, 40],
-    iconAnchor: [14, 0],
+    iconSize: [iconSize.width, iconSize.height],
+    iconAnchor: [iconAnchor.width, iconAnchor.height],
   });
 
   const currentCustomIcon = leaflet.icon({
     iconUrl: 'img/pin-active.svg',
-    iconSize: [28, 40],
-    iconAnchor: [14, 0],
+    iconSize: [iconSize.width, iconSize.height],
+    iconAnchor: [iconAnchor.width, iconAnchor.height],
   });
 
   const markersGroup = useRef<LayerGroup>();

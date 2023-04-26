@@ -1,21 +1,13 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { sendReviewAction } from '../../store/api-action';
-import { CommentLength, MIN_RATING } from '../../const';
+import { CommentLength, MIN_RATING, ratingStarSetting } from '../../const';
 import { getReviewSendingStatus } from '../../store/review-data/review-data-selectors';
 import RatingStars from '../rating-stars/rating-stars';
 
 type userReviewFormProps = {
   offerId: number;
 }
-
-export const ratingStarSetting: {[key: string]: string} = {
-  1: 'terribly',
-  2: 'badly',
-  3: 'not bad',
-  4: 'good',
-  5: 'perfect',
-} as const;
 
 function UserReviewForm({offerId}: userReviewFormProps) {
 
