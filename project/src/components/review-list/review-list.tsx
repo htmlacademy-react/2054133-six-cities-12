@@ -1,7 +1,7 @@
 import { useAppSelector } from '../../store';
 import { getCommentsData } from '../../store/review-data/review-data-selectors';
 import { SortDate } from '../../utils';
-import Review from '../review/review.';
+import Review from '../review/review';
 
 function ReviewList(): JSX.Element {
 

@@ -10,14 +10,14 @@ import ReviewList from '../../components/review-list/review-list';
 import UserStatus from '../../components/user-status/user-status';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { getRating } from '../../utils';
-import { fetchCommentsAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
-import UserReview from '../../components/user-review/user-review';
+import { fetchCommentsAction, fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferAction, fetchUserDataAction, sendFavoritesAction } from '../../store/api-action';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 import { getCurrentOffer, getIsLoadingRoomStatus } from '../../store/offers-data/offers-data-selectors';
 import { getCommentsData } from '../../store/review-data/review-data-selectors';
 import { changeCurrentOffer } from '../../store/offers-data/offers-data';
+import UserReviewForm from '../../components/user-review-form/user-review-form';
 
 function RoomScreen(): JSX.Element {
 
@@ -38,6 +38,7 @@ function RoomScreen(): JSX.Element {
     dispatch(fetchNearbyOffersAction(Number(params.id)));
     dispatch(fetchCommentsAction(Number(params.id)));
     if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(fetchFavoritesAction());
       dispatch(fetchUserDataAction());
     }
   }, [params.id, authStatus, dispatch]);
@@ -161,7 +162,7 @@ function RoomScreen(): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{commentsList.length}</span></h2>
                 <ReviewList />
-                {authStatus === AuthorizationStatus.Auth && <UserReview offerId={Number(params.id)}/>}
+                {authStatus === AuthorizationStatus.Auth && <UserReviewForm offerId={Number(params.id)}/>}
               </section>
             </div>
           </div>

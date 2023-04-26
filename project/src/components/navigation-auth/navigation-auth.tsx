@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 import { fetchOffersAction, logoutAction } from '../../store/api-action';
 import { removeUserData } from '../../store/user-data/user-data';
+import { removeFavoriteOffers } from '../../store/offers-data/offers-data';
 
 function NavigationAuth() {
 
@@ -11,6 +12,7 @@ function NavigationAuth() {
     dispatch(logoutAction());
     dispatch(removeUserData(null));
     dispatch(fetchOffersAction());
+    dispatch(removeFavoriteOffers());
   };
 
   return(

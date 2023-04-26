@@ -1,5 +1,5 @@
 import { MouseEvent, useEffect, useState } from 'react';
-import { OPTIONS } from '../../const';
+import { Options } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
@@ -49,7 +49,7 @@ function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Ele
           </svg>
         </span>
         <ul className={`places__options places__options--custom ${optionsListClassName}`} >
-          {Object.values(OPTIONS).map((option) => <OptionSort key={option} handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
+          {Object.values(Options).map((option) => <OptionSort key={option} handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
         </ul>
       </form>
       <CardList className={'cities__places-list places__list tabs__content' } cardClassName={'cities'} handleCardOver={handleCardOver} />

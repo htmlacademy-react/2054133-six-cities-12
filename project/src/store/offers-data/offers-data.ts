@@ -1,22 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { defaultCity, NameSpace, OPTIONS } from '../../const';
+import { defaultCity, NameSpace, Options } from '../../const';
 import { fetchFavoritesAction, fetchNearbyOffersAction, fetchOfferAction, fetchOffersAction, sendFavoritesAction } from '../api-action';
-import { Offer } from '../../types/offer';
 import { SortToHigh, SortToLow, SortTopRating } from '../../utils';
+import { TOffersData } from '../../types/state';
 
-type TInitialState = {
-  offersList: Offer[];
-  offersListCopy: Offer[];
-  favoriteOffersList: Offer[];
-  favoriteOffersListCopy: Offer[];
-  isLoadingOffersData: boolean;
-  currentOffer: Offer | null;
-  isLoadingRoomData: boolean;
-  nearbyOffersList: Offer[];
-  currentCity: string;
-}
-
-const initialState: TInitialState = {
+const initialState: TOffersData = {
   offersList: [],
   offersListCopy : [],
   favoriteOffersList: [],
@@ -40,17 +28,21 @@ export const offersData = createSlice({
         state.currentOffer.isFavorite = action.payload;
       }
     },
+    removeFavoriteOffers: (state) => {
+      state.favoriteOffersList = [];
+      state.favoriteOffersListCopy = [];
+    },
     sortingOffersAction: (state, action: PayloadAction<{sortType: string; city: string}>) => {
-      if (action.payload.sortType === OPTIONS.POPULAR) {
+      if (action.payload.sortType === Options.POPULAR) {
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload.city);
       }
-      if (action.payload.sortType === OPTIONS.PRICE_TO_HIGH) {
+      if (action.payload.sortType === Options.PRICE_TO_HIGH) {
         state.offersListCopy = state.offersListCopy.sort(SortToHigh);
       }
-      if (action.payload.sortType === OPTIONS.PRICE_TO_LOW) {
+      if (action.payload.sortType === Options.PRICE_TO_LOW) {
         state.offersListCopy = state.offersListCopy.sort(SortToLow);
       }
-      if (action.payload.sortType === OPTIONS.TOP_RATED) {
+      if (action.payload.sortType === Options.TOP_RATED) {
         state.offersListCopy = state.offersListCopy.sort(SortTopRating);
       }
     },
@@ -68,6 +60,9 @@ export const offersData = createSlice({
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === state.currentCity);
         state.isLoadingOffersData = false;
       })
+      .addCase(fetchOffersAction.rejected, (state) => {
+        state.isLoadingOffersData = false;
+      })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favoriteOffersList = action.payload;
         state.favoriteOffersListCopy = action.payload;
@@ -77,6 +72,9 @@ export const offersData = createSlice({
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
         state.currentOffer = action.payload;
+        state.isLoadingRoomData = false;
+      })
+      .addCase(fetchOfferAction.rejected, (state) => {
         state.isLoadingRoomData = false;
       })
       .addCase(fetchNearbyOffersAction.fulfilled, (state, action) => {
@@ -95,6 +93,11 @@ export const offersData = createSlice({
             offer.isFavorite = action.payload.isFavorite;
           }
         });
+        state.nearbyOffersList.forEach((offer) => {
+          if (offer.id === action.payload.id) {
+            offer.isFavorite = action.payload.isFavorite;
+          }
+        });
         if (currentOffer) {
           state.favoriteOffersListCopy = state.favoriteOffersListCopy.filter((offer) => offer.id !== currentOffer.id);
         }
@@ -105,4 +108,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { changeCityAction, changeCurrentOffer, sortingOffersAction, filteringOffersAction } = offersData.actions;
+export const { changeCityAction, changeCurrentOffer, removeFavoriteOffers, sortingOffersAction, filteringOffersAction } = offersData.actions;

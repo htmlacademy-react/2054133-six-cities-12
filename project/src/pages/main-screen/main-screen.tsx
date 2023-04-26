@@ -12,7 +12,7 @@ import { fetchFavoritesAction, fetchUserDataAction } from '../../store/api-actio
 import LoadingScreen from '../loading-screen/loading-screen';
 import { getCurrentCity, getIsLoadingOffersStatus, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
-import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
+import { filteringOffersAction } from '../../store/offers-data/offers-data';
 
 function MainScreen(): JSX.Element {
 
@@ -36,7 +36,6 @@ function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeCityAction(defaultCity));
     dispatch(filteringOffersAction(defaultCity));
     if (authStatus === AuthorizationStatus.Auth) {
       dispatch(fetchFavoritesAction());
