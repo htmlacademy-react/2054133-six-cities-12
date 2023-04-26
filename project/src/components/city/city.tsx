@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
 import { getCurrentCity } from '../../store/offers-data/offers-data-selectors';
+import { useCallback } from 'react';
 
 type CityProps = {
   cityName: string;
@@ -15,14 +16,14 @@ function City({cityName}: CityProps): JSX.Element {
 
   const dispatch = useAppDispatch();
 
-  const handleCityChange = (newCity: string) => {
-    dispatch(changeCityAction(newCity));
-    dispatch(filteringOffersAction(newCity));
-  };
+  const handleCityChange = useCallback(() => {
+    dispatch(changeCityAction(cityName));
+    dispatch(filteringOffersAction(cityName));
+  }, [cityName, dispatch]);
 
   return (
     <li className="locations__item">
-      <Link className={`locations__item-link tabs__item ${getCurrentCityClassName()}`} to="/" onClick={() => handleCityChange(cityName)}>
+      <Link className={`locations__item-link tabs__item ${getCurrentCityClassName()}`} to="/" onClick={handleCityChange}>
         <span>{cityName}</span>
       </Link>
     </li>
