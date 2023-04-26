@@ -6,10 +6,10 @@ import { getNearbyOffersList, getOffersListCopy } from '../../store/offers-data/
 type CardListProps = {
   className: string;
   cardClassName: string;
-  handleCardOver?: (id: number) => void;
+  onCardOver?: (id: number) => void;
 }
 
-function CardList({className, cardClassName, handleCardOver}: CardListProps) {
+function CardList({className, cardClassName, onCardOver}: CardListProps) {
 
   const offersList = useAppSelector(getOffersListCopy);
   const nearbyOffersList = useAppSelector(getNearbyOffersList);
@@ -21,8 +21,8 @@ function CardList({className, cardClassName, handleCardOver}: CardListProps) {
     <div className={className}>
       {
         isMainScreen()
-          ? offersList.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)
-          : nearbyOffersList?.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} handleCardOver={handleCardOver} />)
+          ? offersList.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} onCardOver={onCardOver} />)
+          : nearbyOffersList?.map((offer)=> <Card key={offer.id} offerData={offer} cardClassName={cardClassName} onCardOver={onCardOver} />)
       }
     </div>
   );

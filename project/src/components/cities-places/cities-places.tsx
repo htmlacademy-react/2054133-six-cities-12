@@ -1,32 +1,33 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import { Options } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../store';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
-import { getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { getCurrentCity, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
 import { sortingOffersAction } from '../../store/offers-data/offers-data';
 
 type CitiesPlacesProps = {
-  handleCardOver?: (id: number) => void;
-  currentCity: string;
+  onCardOver?: (id: number) => void;
 }
 
-function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Element {
+function CitiesPlaces({onCardOver}: CitiesPlacesProps): JSX.Element {
+
   const dispatch = useAppDispatch();
 
+  const currentCity = useAppSelector(getCurrentCity);
   const offersList = useAppSelector(getOffersListCopy);
 
   const [optionsListClassName, setOptionsListClassName] = useState('');
   const handleClickSorting = () => optionsListClassName ? setOptionsListClassName('') : setOptionsListClassName('places__options--opened');
 
   const [optionClassName, setOptionClassName] = useState<string>('Popular');
-  const handleClickOption = (evt: MouseEvent<HTMLLIElement>) => {
+  const handleClickOption = useCallback((evt: MouseEvent<HTMLLIElement>) => {
     if (evt.target instanceof HTMLElement && evt.target.textContent !== null) {
       setOptionClassName(evt.target.textContent);
       setOptionsListClassName('');
       dispatch(sortingOffersAction({sortType: evt.target.textContent, city: currentCity}));
     }
-  };
+  }, [currentCity, dispatch]);
 
   useEffect(() => {
     setOptionsListClassName('');
@@ -49,10 +50,10 @@ function CitiesPlaces({handleCardOver, currentCity}: CitiesPlacesProps): JSX.Ele
           </svg>
         </span>
         <ul className={`places__options places__options--custom ${optionsListClassName}`} >
-          {Object.values(Options).map((option) => <OptionSort key={option} handleClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
+          {Object.values(Options).map((option) => <OptionSort key={option} onClickOption={handleClickOption} optionClassName={optionClassName} option={option}/>)}
         </ul>
       </form>
-      <CardList className={'cities__places-list places__list tabs__content' } cardClassName={'cities'} handleCardOver={handleCardOver} />
+      <CardList className={'cities__places-list places__list tabs__content' } cardClassName={'cities'} onCardOver={onCardOver} />
     </section>
   );
 }

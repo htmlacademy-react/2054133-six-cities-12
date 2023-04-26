@@ -37,14 +37,32 @@ enum NameSpace {
   Offers = 'OFFERS',
 }
 
+enum iconSize {
+  width = 28,
+  height = 40,
+}
+
+enum iconAnchor {
+  width = 14,
+  height = 0,
+}
+
 const URL = 'https://12.react.pages.academy/six-cities';
 
-const MIN_RATING = 1;
+const MIN_RATING = '1';
 
 const CommentLength = {
   Min: 50,
   Max: 300,
 };
+
+const ratingStarSetting: {[key: string]: string} = {
+  1: 'terribly',
+  2: 'badly',
+  3: 'not bad',
+  4: 'good',
+  5: 'perfect',
+} as const;
 
 export {
   AppRoute,
@@ -56,5 +74,8 @@ export {
   URL,
   MIN_RATING,
   CommentLength,
-  NameSpace
+  NameSpace,
+  iconSize,
+  iconAnchor,
+  ratingStarSetting
 };

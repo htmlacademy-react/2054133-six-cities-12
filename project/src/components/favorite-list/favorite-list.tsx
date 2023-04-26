@@ -22,9 +22,12 @@ function FavoriteList() {
   };
 
   return (
-    <ul className="favorites__list">
-      {Object.keys(getFavoriteCities()).map((city) => <FavoriteCityCard key={city} city={city} />)}
-    </ul>
+    <section className="favorites">
+      <h1 className="favorites__title">Saved listing</h1>
+      <ul className="favorites__list">
+        {Object.keys(getFavoriteCities()).map((city) => <FavoriteCityCard key={city} city={city} />)}
+      </ul>
+    </section>
   );
 }
 

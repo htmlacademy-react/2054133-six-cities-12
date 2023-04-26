@@ -2,9 +2,14 @@ import { Helmet } from 'react-helmet-async';
 import FavoriteList from '../../components/favorite-list/favorite-list';
 import Logo from '../../components/logo/logo';
 import Navigation from '../../components/navigation/navigation';
+import { getFavoriteOffersListCopy } from '../../store/offers-data/offers-data-selectors';
+import { useAppSelector } from '../../store';
+import FavoriteListEmpty from '../../components/favorite-list-empty/favorite-list-empty';
 
 
 function FavoritesScreen() {
+
+  const favoritesList = useAppSelector(getFavoriteOffersListCopy);
 
   return (
     <div className="page">
@@ -23,10 +28,7 @@ function FavoritesScreen() {
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <FavoriteList />
-          </section>
+          {favoritesList.length < 1 ? <FavoriteListEmpty /> : <FavoriteList />}
         </div>
       </main>
       <footer className="footer container">
