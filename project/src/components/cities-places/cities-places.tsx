@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../store';
 import CardList from '../card-list/card-list';
 import OptionSort from '../option-sort/option-sort';
 import { getCurrentCity, getOffersListCopy } from '../../store/offers-data/offers-data-selectors';
-import { sortingOffersAction } from '../../store/offers-data/offers-data';
+import { sortOffersAction } from '../../store/offers-data/offers-data';
 
 type CitiesPlacesProps = {
   onCardOver?: (id: number) => void;
@@ -25,7 +25,7 @@ function CitiesPlaces({onCardOver}: CitiesPlacesProps): JSX.Element {
     if (evt.target instanceof HTMLElement && evt.target.textContent !== null) {
       setOptionClassName(evt.target.textContent);
       setOptionsListClassName('');
-      dispatch(sortingOffersAction({sortType: evt.target.textContent, city: currentCity}));
+      dispatch(sortOffersAction({sortType: evt.target.textContent, city: currentCity}));
     }
   }, [currentCity, dispatch]);
 

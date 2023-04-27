@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store';
-import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
+import { changeCityAction, filterOffersAction } from '../../store/offers-data/offers-data';
 import { getCurrentCity } from '../../store/offers-data/offers-data-selectors';
 import { useCallback } from 'react';
 
@@ -18,7 +18,7 @@ function City({cityName}: CityProps): JSX.Element {
 
   const handleCityChange = useCallback(() => {
     dispatch(changeCityAction(cityName));
-    dispatch(filteringOffersAction(cityName));
+    dispatch(filterOffersAction(cityName));
   }, [cityName, dispatch]);
 
   return (

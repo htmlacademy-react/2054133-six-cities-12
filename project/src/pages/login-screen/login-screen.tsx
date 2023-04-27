@@ -9,7 +9,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { getAuthorizationStatus } from '../../store/user-process/user-process-selectors';
 import { getRandomArrayElement } from '../../utils';
 import { CITIES } from '../../const';
-import { changeCityAction, filteringOffersAction } from '../../store/offers-data/offers-data';
+import { changeCityAction, filterOffersAction } from '../../store/offers-data/offers-data';
 
 function LoginScreen(): JSX.Element {
 
@@ -44,7 +44,7 @@ function LoginScreen(): JSX.Element {
 
   const handleCityLink = () => {
     dispatch(changeCityAction(cityButton));
-    dispatch(filteringOffersAction(cityButton));
+    dispatch(filterOffersAction(cityButton));
   };
 
   return (

@@ -32,7 +32,7 @@ export const offersData = createSlice({
       state.favoriteOffersList = [];
       state.favoriteOffersListCopy = [];
     },
-    sortingOffersAction: (state, action: PayloadAction<{sortType: string; city: string}>) => {
+    sortOffersAction: (state, action: PayloadAction<{sortType: string; city: string}>) => {
       if (action.payload.sortType === Options.POPULAR) {
         state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload.city);
       }
@@ -46,7 +46,7 @@ export const offersData = createSlice({
         state.offersListCopy = state.offersListCopy.sort(SortTopRating);
       }
     },
-    filteringOffersAction: (state, action: PayloadAction<string>) => {
+    filterOffersAction: (state, action: PayloadAction<string>) => {
       state.offersListCopy = state.offersList.filter((offer) => offer.city.name === action.payload);
     }
   },
@@ -108,4 +108,4 @@ export const offersData = createSlice({
   }
 });
 
-export const { changeCityAction, changeCurrentOffer, removeFavoriteOffers, sortingOffersAction, filteringOffersAction } = offersData.actions;
+export const { changeCityAction, changeCurrentOffer, removeFavoriteOffers, sortOffersAction, filterOffersAction } = offersData.actions;
