@@ -26,7 +26,7 @@ function UserReviewForm({offerId}: userReviewFormProps) {
   const isButtonDisabled = () => {
     if (
       userComment.rating < MIN_RATING
-      || userComment.review.length <= CommentLength.Min
+      || userComment.review.length < CommentLength.Min
       || userComment.review.length > CommentLength.Max
       || isReviewSending
     ) {
@@ -45,10 +45,11 @@ function UserReviewForm({offerId}: userReviewFormProps) {
       hotelId: offerId,
       comment: userComment.review,
       rating: Number(userComment.rating),
+      cleanForm,
     };
 
     dispatch(sendReviewAction(reviewData));
-    cleanForm();
+
   };
 
   const handleChangeForm = ({target}: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

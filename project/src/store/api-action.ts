@@ -6,7 +6,7 @@ import { ApiRoute } from '../const';
 import AuthData from '../types/auth-data';
 import LoginData from '../types/login-data';
 import { dropToken, saveToken } from '../services/token';
-import { Review, UserComment } from '../types/user';
+import { UserComment } from '../types/user';
 
 const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
@@ -86,18 +86,24 @@ const fetchCommentsAction = createAsyncThunk<UserComment[], number, {
   },
 );
 
-const sendReviewAction = createAsyncThunk<UserComment[], Review, {
+const sendReviewAction = createAsyncThunk<UserComment[], {
+  hotelId: number;
+  comment: string;
+  rating: number;
+  cleanForm: () => void;
+    },
+  {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
-}>(
-  'data/sendReview',
-  async ({hotelId, comment, rating}, {dispatch, extra: api}) => {
-    const {data: review} = await api.post<UserComment[]>(`/comments/${hotelId}`, {comment, rating});
-
-    return review;
-  },
-);
+  }>(
+    'data/sendReview',
+    async ({hotelId, comment, rating, cleanForm}, {dispatch, extra: api}) => {
+      const {data: review} = await api.post<UserComment[]>(`/comments/${hotelId}`, {comment, rating});
+      cleanForm();
+      return review;
+    },
+    );
 
 const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

@@ -13,10 +13,4 @@ type UserComment = {
   user: User;
 };
 
-type Review = {
-  hotelId: number;
-  comment: string;
-  rating: number;
-}
-
-export type { UserComment, Review };
+export type { UserComment };
